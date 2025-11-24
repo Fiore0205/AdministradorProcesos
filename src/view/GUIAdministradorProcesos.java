@@ -504,13 +504,14 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.setBackground(new java.awt.Color(0, 0, 204));
+        jTabbedPane1.setBackground(new java.awt.Color(102, 102, 255));
         jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("UCPU:");
 
+        btnAsignarRecursosMaquina.setBackground(new java.awt.Color(153, 153, 255));
         btnAsignarRecursosMaquina.setText("Asignar Recursos");
         btnAsignarRecursosMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -550,6 +551,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
             }
         });
 
+        btnCrearMaquina.setBackground(new java.awt.Color(153, 153, 255));
         btnCrearMaquina.setText("Crear");
         btnCrearMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -557,6 +559,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
             }
         });
 
+        btnModificarMaquina.setBackground(new java.awt.Color(153, 153, 255));
         btnModificarMaquina.setText("Modificar");
         btnModificarMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -564,6 +567,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
             }
         });
 
+        btnEliminarMaquina.setBackground(new java.awt.Color(153, 153, 255));
         btnEliminarMaquina.setText("Eliminar");
         btnEliminarMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -571,6 +575,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
             }
         });
 
+        btnConsultarMaquina.setBackground(new java.awt.Color(153, 153, 255));
         btnConsultarMaquina.setText("Consultar");
         btnConsultarMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -578,6 +583,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
             }
         });
 
+        btnAgregarMaquina.setBackground(new java.awt.Color(153, 153, 255));
         btnAgregarMaquina.setText("Agregar");
         btnAgregarMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -923,10 +929,11 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 51, 204));
         jPanel1.setLayout(null);
 
-        panel_botones_algoritmos.setBackground(new java.awt.Color(0, 51, 204));
+        panel_botones_algoritmos.setBackground(new java.awt.Color(102, 153, 255));
         panel_botones_algoritmos.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(153, 153, 153)));
         panel_botones_algoritmos.setForeground(new java.awt.Color(255, 255, 255));
 
+        btnTMC.setBackground(new java.awt.Color(204, 204, 255));
         btnTMC.setText("Tiempo + Corto");
         btnTMC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -938,17 +945,19 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         btnODL.setFont(new java.awt.Font("Dubai Medium", 1, 12)); // NOI18N
         btnODL.setForeground(new java.awt.Color(255, 255, 255));
         btnODL.setText("Orden de Llegada");
-        btnODL.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         btnODL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnODLActionPerformed(evt);
             }
         });
 
+        btnRR.setBackground(new java.awt.Color(204, 204, 255));
         btnRR.setText("Round Robin");
 
+        btnPRI.setBackground(new java.awt.Color(204, 204, 255));
         btnPRI.setText("Prioridad");
 
+        btnCM.setBackground(new java.awt.Color(204, 204, 255));
         btnCM.setText("Colas Múltiples");
 
         javax.swing.GroupLayout panel_botones_algoritmosLayout = new javax.swing.GroupLayout(panel_botones_algoritmos);
