@@ -1,0 +1,455 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author fioli
+ */
+public class AdministradorProcesos {
+
+    ListaProcesos listaProcesos;
+    Proceso proceso;
+    private ListaMaquinas listaMaquinas;
+    private Maquina maquina;
+    private int tiempoActual;
+
+    public AdministradorProcesos() {
+        listaProcesos = new ListaProcesos();
+        listaMaquinas = new ListaMaquinas();
+        tiempoActual = 0;
+    }
+
+    //getters y setters
+    public ListaProcesos getListaProcesos() {
+        return listaProcesos;
+    }
+
+    public void setListaProcesos(ListaProcesos listaProcesos) {
+        this.listaProcesos = listaProcesos;
+    }
+
+    public Proceso getProceso() {
+        return proceso;
+    }
+
+    public void setProceso(Proceso proceso) {
+        this.proceso = proceso;
+    }
+
+    //------- METODOS DE PROCESOS BOTONES --------------------
+    public void crearProceso(int nProceso, String nombre, int prioridad, int tipo, int unidadesTiempo, int unidadesMem,
+            int unidadesCpu) {
+        proceso = new Proceso(nProceso, nombre, prioridad, tipo, unidadesTiempo, unidadesMem, unidadesCpu);
+    }
+
+    public void modificarProceso(String nProceso, String nombre, String prioridad, String tipo, String unidadesTiempo, String unidadesMem,
+            String unidadesCpu) {
+        listaProcesos.modificarProceso(nProceso, nombre, prioridad, tipo, unidadesTiempo, unidadesMem, unidadesCpu);
+    }
+
+    public boolean eliminarProceso(int nProceso) {
+        return listaProcesos.eliminarProceso(nProceso);
+    }
+
+    public String consultarProceso(int nProceso) {
+        return listaProcesos.consultarProceso(nProceso);
+    }
+
+    public void agregarProceso() {
+        listaProcesos.agregarProceso(proceso);
+    }
+
+    public void asignarRecursoAProceso(Recurso r) {
+        proceso.asignarRecurso(r);
+    }
+
+    //------- METODOS DE PROCESOS LISTAS --------------------
+    public String listarProcesosDetalle() { //para cuadro de procesos
+        return listaProcesos.listarProcesosDetalle();
+    }
+
+    public String listarRecursosRequeridos() {
+        return proceso.listarRecursosRequeridos();
+    }
+
+    public String listarProcesoDetalle() {
+        return proceso.toStringDetalle();
+    }
+
+    public String listarRecursosRequeridos(int nProceso) {
+        return listaProcesos.listarRecursosRequeridos(nProceso);
+    }
+
+    // ============================================================
+    //                    MÉTODOS DE MÁQUINAS
+    // ============================================================
+    public void crearMaquina(int nMaquina, String nombre,
+            int tiempoInicio, int unidadesMemoria, int unidadesCPU) {
+
+        maquina = new Maquina(nMaquina, nombre, tiempoInicio,
+                unidadesMemoria, unidadesCPU);
+    }
+
+    public void agregarMaquina() {
+        listaMaquinas.agregarMaquina(maquina);
+    }
+
+    public boolean eliminarMaquina(int nMaquina) {
+        return listaMaquinas.eliminarMaquina(nMaquina);
+    }
+
+    public void modificarMaquina(String nMaquina, String nuevoNombre,
+            String nuevoTiempoInicio, String nuevoUMemoria, String nuevoUCPU) {
+
+        listaMaquinas.modificarMaquina(nMaquina, nuevoNombre,
+                nuevoTiempoInicio, nuevoUMemoria, nuevoUCPU);
+    }
+
+    public String consultarMaquina(int nMaquina) {
+        return listaMaquinas.consultarMaquina(nMaquina);
+    }
+
+    public void asignarRecursoAMaquina(Recurso r) {
+        maquina.asignarRecurso(r);
+    }
+
+    // ----METODOS MAQUINAS LISTAR ----
+    public String listarMaquinasDetalle() {
+        return listaMaquinas.listarMaquinasDetalle();
+    }
+
+    public String detalleMaquina() {
+        return maquina.toString();
+    }
+
+    public String listarRecursosMaquina(int nMaquina) {
+        return listaMaquinas.listarRecursosDisponibles(nMaquina);
+    }
+
+    public String listarRecursosDisponibles() {
+        return maquina.listarRecursosDisponibles();
+    }
+
+    public String listarRecursosTodasLasMaquinas() {
+        return listaMaquinas.listarRecursosDeTodasLasMaquinas();
+    }
+
+    // ============================================================
+//    ALGORITMOs DE PLANIFICACION
+// ============================================================
+    public void algoritmoOrdenDeLlegada() {
+        ejecucionDeProcesos();
+    }
+
+    public void algoritmoPrioridad() {
+        listaProcesos.ordenarPrioridad();
+        ejecucionDeProcesos();
+    }
+
+    public void algoritmoTiempoMasCorto() {
+        listaProcesos.ordenarTiempo();
+        ejecucionDeProcesos();
+    }
+
+    // ============================================================
+//    TABLA PARA LOS ALGORITMOS DE PLANIFICACION 
+// ============================================================
+    public String listarTablaDeEstados() {
+        String salida = "Lista Procesos T" + tiempoActual + "\n";
+        return salida += listaProcesos.listarProcesosTabla();
+    }
+
+    // ============================================================
+//    MÉTODO PARA BUSCAR LA PRIMERA MÁQUINA DISPONIBLE POR TIEMPO
+// ============================================================
+    public Maquina buscarMaquinaValida(Proceso p) {
+        ArrayList<Maquina> lista = listaMaquinas.getLista();
+
+        for (Maquina m : lista) {
+            if (m.getTiempoInicio() <= tiempoActual) {
+
+                boolean okMem = p.getUnidadesMem() <= m.getUnidadesMemoriaDisponible();
+
+                boolean okRec = true;
+
+                for (Recurso rP : p.getListaRecursosProcesos().getLista()) {
+                    Recurso rM = m.getListaRecursoMaquina().buscarPorNombre(rP.getNomRecurso());
+                    if (rM == null || rP.getUnidades() > rM.getUdisponibles()) {
+                        okRec = false;
+                        break;
+                    }
+                }
+
+                if (okMem && okRec) {
+                    return m;   // ESTA máquina sirve
+                }
+            }
+        }
+
+        return null; // ninguna sirve TODAVÍA
+    }
+
+    // ============================================================
+//     VALIDAR MEMORIA SOLO CONTRA LA MÁQUINA DISPONIBLE
+// ============================================================
+    public boolean validarMemoria(Proceso proceso) {
+        Maquina m = buscarMaquinaValida(proceso);
+        if (m == null) {
+            return false;
+        }
+
+        return proceso.getUnidadesMem() <= m.getUnidadesMemoriaDisponible();
+    }
+
+    //ASIGNA MEMORIA A LA MAQUINA
+    public void asignarMemoriaAProceso(Proceso proceso) {
+        Maquina m = proceso.getMaquinaAsignada();
+
+        if (m != null) {
+            m.asignarMemoria(proceso.getUnidadesMem());
+        }
+    }
+
+    // ============================================================
+//    VALIDAR RECURSOS (NOMBRE + UNIDADES) EN LA MÁQUINA DISPONIBLE
+// ============================================================
+    public boolean validarRecursos(Proceso proceso) {
+
+        Maquina m = buscarMaquinaValida(proceso);
+        if (m == null) {
+            return false;
+        }
+
+        ArrayList<Recurso> recursosProceso = proceso.getListaRecursosProcesos().getLista();
+        ArrayList<Recurso> recursosMaquina = m.getListaRecursoMaquina().getLista();
+
+        for (Recurso rP : recursosProceso) {
+
+            boolean encontrado = false;
+
+            for (Recurso rM : recursosMaquina) {
+                if (rP.getNomRecurso().equalsIgnoreCase(rM.getNomRecurso())) {
+                    encontrado = true;
+
+                    if (rP.getUnidades() > rM.getUdisponibles()) {
+                        return false;
+                    }
+                    break;
+                }
+            }
+
+            if (!encontrado) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // --- ASIGNA RECURSOS ---
+    public void asignarRecursosAProceso(Proceso proceso) {
+
+        Maquina m = proceso.getMaquinaAsignada();
+        if (m == null) {
+            return;
+        }
+
+        ArrayList<Recurso> recursosProceso = proceso.getListaRecursosProcesos().getLista();
+        ArrayList<Recurso> recursosMaquina = m.getListaRecursoMaquina().getLista();
+
+        for (Recurso rP : recursosProceso) {
+
+            for (Recurso rM : recursosMaquina) {
+
+                if (rP.getNomRecurso().equalsIgnoreCase(rM.getNomRecurso())) {
+
+                    rM.asignarRecurso(rP.getUnidades());
+                }
+            }
+        }
+    }
+
+    // ============================================================
+// CAMBIAR ESTADO DEL PROCESO
+// ============================================================
+    public void cambiarEstadoProceso(Proceso proceso, int estado) {
+        if (proceso != null) {
+            proceso.setEstado(estado);
+        }
+    }
+
+    // ============================================================
+//  DECREMENTAR TIEMPO RESTANTE DEL PROCESO ACTIVO
+// ============================================================
+    public void tiempoProcesoRestante(Proceso proceso) {
+        if (proceso == null) {
+            return;
+        }
+
+        // Solo decrementa si está ACTIVO
+        if (proceso.getEstado() == 1 && proceso.getUnidadesTiempoRestante() > 0) {
+            proceso.disminuirTiempoRestante();
+        }
+    }
+
+    // ============================================================
+//       MÉTODO PRINCIPAL DE EJECUCIÓN DE PROCESOS (FIFO)
+// ============================================================
+    public void ejecucionDeProcesos() {
+
+        boolean todosTerminados = false;
+
+        while (!todosTerminados) {
+
+            // Paso 1: Revisar todos los procesos en este tiempo ACTUAL
+            for (Proceso p : listaProcesos.getLista()) {
+
+                // Si ya está TERMINADO o BLOQUEADO, no hacemos nada
+                if (p.getEstado() == 4 || p.getEstado() == 3) {
+                    continue;
+                }
+
+                // Si ya no le queda tiempo, marcar TERMINADO y liberar
+                if (p.getUnidadesTiempoRestante() == 0) {
+                    cambiarEstadoProceso(p, 4);
+                    liberarRecursosYMemoria(p);
+                    continue;
+                }
+
+                // Si YA tiene una máquina asignada, solo ejecutar
+                if (p.getMaquinaAsignada() != null) {
+                    cambiarEstadoProceso(p, 1);   // ACTIVO
+                    tiempoProcesoRestante(p);     // solo baja si está ACTIVO
+                    continue;
+                }
+
+                // Si NO tiene máquina asignada, buscar una que sirva
+                Maquina m = buscarMaquinaValida(p);
+
+                if (m == null) {
+                    // No hay máquina que lo pueda correr en este momento
+                    cambiarEstadoProceso(p, 2);   // ESPERA
+                    continue;
+                }
+
+                // Asignar máquina y recursos por primera vez
+                p.setMaquinaAsignada(m);
+                asignarMemoriaAProceso(p);
+                asignarRecursosAProceso(p);
+
+                cambiarEstadoProceso(p, 1);       // ACTIVO
+                tiempoProcesoRestante(p);
+            }
+
+            // IMPRIMIR TABLA
+            System.out.println(listarTablaDeEstados());
+
+            // Verificar si todos están TERMINADOS o BLOQUEADOS
+            todosTerminados = true;
+            for (Proceso px : listaProcesos.getLista()) {
+                if (px.getEstado() != 4 && px.getEstado() != 3) {
+                    todosTerminados = false;
+                    break;
+                }
+            }
+
+            if (todosTerminados) {
+                break;
+            }
+
+            // Avanzar tiempo
+            tiempoActual++;
+
+            // SOLO bloqueamos procesos cuando TODAS las máquinas están disponibles
+            if (todasMaquinasDisponibles()) {
+                for (Proceso p : listaProcesos.getLista()) {
+
+                    if (p.getUnidadesTiempoRestante() > 0
+                            && p.getEstado() != 4
+                            && p.getEstado() != 1) { // no bloquear activos ni terminados
+
+                        if (cambiarAEstadoBloqueado(p)) {
+                            cambiarEstadoProceso(p, 3); // BLOQUEADO
+                        }
+                    }
+                }
+            }
+
+        } // FIN WHILE
+    }
+
+    private boolean todasMaquinasDisponibles() {
+        ArrayList<Maquina> lista = listaMaquinas.getLista();
+        if (lista.isEmpty()) {
+            return false;
+        }
+
+        for (Maquina m : lista) {
+            // Si alguna máquina todavía tiene tiempoInicio mayor al tiempoActual,
+            // significa que aún no todas están disponibles
+            if (m.getTiempoInicio() > tiempoActual) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // ============================================================
+//  DETERMINAR SI DEBE PASAR A BLOQUEADO
+// ============================================================
+    private boolean cambiarAEstadoBloqueado(Proceso p) {
+
+        ArrayList<Maquina> lista = listaMaquinas.getLista();
+
+        // Aquí asumimos que ya todas las máquinas están disponibles
+        // (lo controla todasMaquinasDisponibles())
+        for (Maquina m : lista) {
+
+            boolean okMem = p.getUnidadesMem() <= m.getUnidadesMemoriaDisponible();
+            boolean okRec = true;
+
+            for (Recurso rP : p.getListaRecursosProcesos().getLista()) {
+                Recurso rM = m.getListaRecursoMaquina().buscarPorNombre(rP.getNomRecurso());
+                if (rM == null || rP.getUnidades() > rM.getUdisponibles()) {
+                    okRec = false;
+                    break;
+                }
+            }
+
+            // Si hay AL MENOS una máquina que pueda atenderlo (memoria y recursos),
+            // no debe ser bloqueado
+            if (okMem && okRec) {
+                return false;
+            }
+        }
+
+        // Ninguna máquina puede correr este proceso → BLOQUEADO
+        return true;
+    }
+
+    //--- METODO LIBERAR RECURSOS Y MEMORIA ---
+    public void liberarRecursosYMemoria(Proceso p) {
+
+        Maquina m = p.getMaquinaAsignada();
+
+        if (m == null) {
+            return; // El proceso nunca se ejecutó
+        }
+        // LIBERAR MEMORIA
+        m.liberarMemoria(p.getUnidadesMem());
+
+        // LIBERAR RECURSOS
+        for (Recurso rP : p.getListaRecursosProcesos().getLista()) {
+            m.getListaRecursoMaquina().liberarRecursoPorNumero(rP.getNrecurso());
+        }
+
+        // Remover referencia
+        p.setMaquinaAsignada(null);
+    }
+
+}
