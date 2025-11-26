@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Maquina {
 
     private ListaRecursos listaRecursoMaquina;
@@ -12,6 +14,7 @@ public class Maquina {
     private String nombre;
     private String ubicacion;
     private int tiempoInicio;
+    private ArrayList<String> memoriaMapa;  // Representación visual
 
     // --- CONSTRUCTOR PRINCIPAL ---
     public Maquina(int nMaquina, String nombre,
@@ -29,6 +32,7 @@ public class Maquina {
         cantidadNucleos = (int) (Math.random() * 4) + 1;
 
         listaRecursoMaquina = new ListaRecursos(15);
+        inicializarMapaMemoria();
     }
 
     // --- GETTERS Y SETTERS ---
@@ -186,6 +190,26 @@ public class Maquina {
         }
 
         return sb.toString();
+    }
+
+    //--- Listar Memoria de Maquina ---
+    public String enlistarMemoriaMaquina() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(nombre).append("\t");
+
+        for (String celda : memoriaMapa) {
+            sb.append(celda).append("  ");
+        }
+        return sb.toString();
+    }
+
+    //--- inicializar Mapa de Memoria ---
+    public void inicializarMapaMemoria() {
+        memoriaMapa = new ArrayList<>();
+        for (int i = 0; i < unidadesMemoriaMaquina; i++) {
+            memoriaMapa.add("L");
+        }
     }
 
 }
