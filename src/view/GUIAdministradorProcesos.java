@@ -6,6 +6,7 @@ package view;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -395,6 +396,48 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     public void setTxtAreaMemoriaMaquinasTMC(String txtAreaMemoriaMaquinasTMC) {
         this.txtAreaMemoriaMaquinasTMC.setText(txtAreaMemoriaMaquinasTMC);
     }
+
+    public JButton getBtnIniciarPRI() {
+        return btnIniciarPRI;
+    }
+
+    public void setBtnIniciarPRI(JButton btnIniciarPRI) {
+        this.btnIniciarPRI = btnIniciarPRI;
+    }
+
+    public JButton getBtnPararPRI() {
+        return btnPararPRI;
+    }
+
+    public void setBtnPararPRI(JButton btnPararPRI) {
+        this.btnPararPRI = btnPararPRI;
+    }
+
+    public String getTxtAreaListaTablaEstadosPRI() {
+        return txtAreaListaTablaEstadosPRI.getText();
+    }
+
+    public void setTxtAreaListaTablaEstadosPRI(String txtAreaListaTablaEstadosPRI) {
+        this.txtAreaListaTablaEstadosPRI.setText(txtAreaListaTablaEstadosPRI);
+    }
+
+    public String getTxtAreaListarRecursosMaquinasPRI() {
+        return txtAreaListarRecursosMaquinasPRI.getText();
+    }
+
+    public void setTxtAreaListarRecursosMaquinasPRI(String txtAreaListarRecursosMaquinasPRI) {
+        this.txtAreaListarRecursosMaquinasPRI.setText(txtAreaListarRecursosMaquinasPRI);
+    }
+
+    public String getTxtAreaMemoriaMaquinasPRI() {
+        return txtAreaMemoriaMaquinasPRI.getText();
+    }
+
+    public void setTxtAreaMemoriaMaquinasPRI(String txtAreaMemoriaMaquinasPRI) {
+        this.txtAreaMemoriaMaquinasPRI.getText();
+    }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -481,6 +524,16 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         btnIniciarODL = new javax.swing.JButton();
         btnPararODL = new javax.swing.JButton();
+        panel_PRI = new javax.swing.JPanel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        txtAreaListaTablaEstadosPRI = new javax.swing.JTextArea();
+        btnIniciarPRI = new javax.swing.JButton();
+        btnPararPRI = new javax.swing.JButton();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        txtAreaListarRecursosMaquinasPRI = new javax.swing.JTextArea();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        txtAreaMemoriaMaquinasPRI = new javax.swing.JTextArea();
+        jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1105,6 +1158,72 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
 
         panel_parent.add(panel_ODL, "card2");
 
+        txtAreaListaTablaEstadosPRI.setColumns(20);
+        txtAreaListaTablaEstadosPRI.setRows(5);
+        jScrollPane11.setViewportView(txtAreaListaTablaEstadosPRI);
+
+        btnIniciarPRI.setText("Iniciar");
+
+        btnPararPRI.setText("Parar");
+
+        txtAreaListarRecursosMaquinasPRI.setColumns(20);
+        txtAreaListarRecursosMaquinasPRI.setRows(5);
+        jScrollPane12.setViewportView(txtAreaListarRecursosMaquinasPRI);
+
+        txtAreaMemoriaMaquinasPRI.setColumns(20);
+        txtAreaMemoriaMaquinasPRI.setRows(5);
+        jScrollPane13.setViewportView(txtAreaMemoriaMaquinasPRI);
+
+        jLabel21.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Mapa Memoria");
+
+        javax.swing.GroupLayout panel_PRILayout = new javax.swing.GroupLayout(panel_PRI);
+        panel_PRI.setLayout(panel_PRILayout);
+        panel_PRILayout.setHorizontalGroup(
+            panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_PRILayout.createSequentialGroup()
+                .addGroup(panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panel_PRILayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(187, 187, 187))
+                    .addGroup(panel_PRILayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane13)
+                            .addGroup(panel_PRILayout.createSequentialGroup()
+                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panel_PRILayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnIniciarPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnPararPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(27, 27, 27))
+        );
+        panel_PRILayout.setVerticalGroup(
+            panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_PRILayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnIniciarPRI)
+                    .addComponent(btnPararPRI))
+                .addGap(37, 37, 37)
+                .addGroup(panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+
+        panel_parent.add(panel_PRI, "card4");
+
         jPanel4.add(panel_parent);
         panel_parent.setBounds(280, 0, 560, 480);
 
@@ -1202,17 +1321,11 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAsignarRecursosProcesoActionPerformed
 
     private void btnTMCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTMCActionPerformed
-        panel_parent.removeAll();
-        panel_parent.add(panel_TMC);
-        panel_parent.repaint();
-        panel_parent.revalidate();
+
     }//GEN-LAST:event_btnTMCActionPerformed
 
     private void btnODLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnODLActionPerformed
-        //panel_parent.removeAll();
-        //panel_parent.add(panel_ODL);
-        //panel_parent.repaint();
-        //panel_parent.revalidate();
+
     }//GEN-LAST:event_btnODLActionPerformed
 
 
@@ -1230,12 +1343,14 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminarMaquina;
     private javax.swing.JButton btnEliminarProceso;
     private javax.swing.JButton btnIniciarODL;
+    private javax.swing.JButton btnIniciarPRI;
     private javax.swing.JButton btnIniciarTMC;
     private javax.swing.JButton btnModificarMaquina;
     private javax.swing.JButton btnModificarProceso;
     private javax.swing.JButton btnODL;
     private javax.swing.JButton btnPRI;
     private javax.swing.JButton btnPararODL;
+    private javax.swing.JButton btnPararPRI;
     private javax.swing.JButton btnPararTMC;
     private javax.swing.JButton btnRR;
     private javax.swing.JButton btnTMC;
@@ -1252,6 +1367,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1265,6 +1381,9 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1275,6 +1394,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel panel_ODL;
+    private javax.swing.JPanel panel_PRI;
     private javax.swing.JPanel panel_TMC;
     private javax.swing.JPanel panel_botones_algoritmos;
     private javax.swing.JPanel panel_parent;
@@ -1283,10 +1403,13 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JTextArea txtAreaListaRecursos;
     private javax.swing.JTextArea txtAreaListaRecursosMaquina;
     private javax.swing.JTextArea txtAreaListaTablaEstadosODL;
+    private javax.swing.JTextArea txtAreaListaTablaEstadosPRI;
     private javax.swing.JTextArea txtAreaListaTablaEstadosTMC;
     private javax.swing.JTextArea txtAreaListarRecursosMaquinasODL;
+    private javax.swing.JTextArea txtAreaListarRecursosMaquinasPRI;
     private javax.swing.JTextArea txtAreaListarRecursosMaquinasTMC;
     private javax.swing.JTextArea txtAreaMemoriaMaquinasODL;
+    private javax.swing.JTextArea txtAreaMemoriaMaquinasPRI;
     private javax.swing.JTextArea txtAreaMemoriaMaquinasTMC;
     private javax.swing.JTextField txtNMaquina;
     private javax.swing.JTextField txtNProceso;

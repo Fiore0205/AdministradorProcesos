@@ -397,20 +397,20 @@ public class ControllerGeneral implements ActionListener {
 
             // Actualizar memoria de las maquinas
             guiAdmin.setTxtAreaMemoriaMaquinasODL(administradorP.listarMapaMemoria());
-            
+
         } else if (tipoAlgoritmo == 1) {
             guiAdmin.setTxtAreaListaTablaEstadosTMC(administradorP.listarTablaDeEstados());
 
             guiAdmin.setTxtAreaListarRecursosMaquinasTMC(administradorP.listarRecursosTodasLasMaquinas());
 
             guiAdmin.setTxtAreaMemoriaMaquinasTMC(administradorP.listarMapaMemoria());
-            
+
         } else if (tipoAlgoritmo == 2) {
-            /* guiAdmin.setTxtAreaTablaPrioridad(administradorP.listarTablaDeEstados());
+            guiAdmin.setTxtAreaListaTablaEstadosPRI(administradorP.listarTablaDeEstados());
 
-                guiAdmin.setTxtAreaRecursosPrioridad(administradorP.listarRecursosTodasLasMaquinas());
+            guiAdmin.setTxtAreaListarRecursosMaquinasPRI(administradorP.listarRecursosTodasLasMaquinas());
 
-                guiAdmin.setTxtAreaMemoriaPrioridad(administradorP.listarMapaMemoria());*/
+            guiAdmin.setTxtAreaMemoriaMaquinasPRI(administradorP.listarMapaMemoria());
         }
     }
 
