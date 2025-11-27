@@ -332,13 +332,16 @@ public class ControllerGeneral implements ActionListener {
 
                 // Actualizar tabla en GUI
                 guiAdmin.setTxtAreaListaTablaEstadosODL(
-                        administradorP.obtenerHistorialEjecucion()
+                        administradorP.listarTablaDeEstados()
                 );
 
                 // Actualizar recursos de máquina
                 guiAdmin.setTxtAreaListarRecursosMaquinasODL(
                         administradorP.listarRecursosTodasLasMaquinas()
                 );
+
+                // Actualizar memoria de las maquinas
+                guiAdmin.setTxtAreaMemoriaMaquinasODL(administradorP.listarMapaMemoria());
 
                 tiempoSimulacion++;
 

@@ -17,13 +17,11 @@ public class AdministradorProcesos {
     private ListaMaquinas listaMaquinas;
     private Maquina maquina;
     private int tiempoActual;
-    private StringBuilder historialEjecucion;
 
     public AdministradorProcesos() {
         listaProcesos = new ListaProcesos();
         listaMaquinas = new ListaMaquinas();
         tiempoActual = 0;
-        historialEjecucion = new StringBuilder();
     }
 
     //getters y setters
@@ -141,6 +139,10 @@ public class AdministradorProcesos {
         return listaMaquinas.listarRecursosDeTodasLasMaquinas();
     }
 
+    public String listarMapaMemoria() {
+        return listaMaquinas.mostrarMapaMemoriaTodas();
+    }
+
     // ============================================================
 //    ALGORITMOs DE PLANIFICACION
 // ============================================================
@@ -214,6 +216,7 @@ public class AdministradorProcesos {
 
         if (m != null) {
             m.asignarMemoria(proceso.getUnidadesMem());
+            m.ocuparMemoriaMapa(proceso);
         }
     }
 
@@ -306,24 +309,38 @@ public class AdministradorProcesos {
 
         boolean todosTerminados = true;
 
-        // ===== PASO 1: revisar procesos en este tiempo actual =====
+        // ===== PASO 1: revisar procesos en tiempo actual =====
         for (Proceso p : listaProcesos.getLista()) {
 
-            // Si está terminado o bloqueado, seguir
-            if (p.getEstado() == 4 || p.getEstado() == 3) {
+            // Si está TERMINADO → ignorar
+            if (p.getEstado() == 4) {
                 continue;
+            }
+
+            // Si está BLOQUEADO → volver a revisar si YA puede ejecutarse
+            if (p.getEstado() == 3) {
+
+                Maquina nueva = buscarMaquinaValida(p);
+
+                if (nueva != null) {
+                    // ✔ DESBLOQUEAR — ahora sí puede ejecutarse
+                    p.setEstado(2); // ESPERA
+                } else {
+                    // ❌ Sigue bloqueado, no continúa
+                    continue;
+                }
             }
 
             todosTerminados = false;
 
-            // Terminado por tiempo
+            // Si ya no tiene tiempo → TERMINADO
             if (p.getUnidadesTiempoRestante() == 0) {
-                cambiarEstadoProceso(p, 4); // TERMINADO
+                cambiarEstadoProceso(p, 4);
                 liberarRecursosYMemoria(p);
                 continue;
             }
 
-            // Ya tiene máquina asignada → solo ejecutar
+            // Si ya tiene máquina asignada → EJECUTAR
             if (p.getMaquinaAsignada() != null) {
                 cambiarEstadoProceso(p, 1);
                 tiempoProcesoRestante(p);
@@ -338,7 +355,7 @@ public class AdministradorProcesos {
                 continue;
             }
 
-            // Asignar y ejecutar
+            // Asignar máquina y ejecutar
             p.setMaquinaAsignada(m);
             asignarMemoriaAProceso(p);
             asignarRecursosAProceso(p);
@@ -346,32 +363,32 @@ public class AdministradorProcesos {
             cambiarEstadoProceso(p, 1);
             tiempoProcesoRestante(p);
         }
-        // Si todos están listos → FIN
+
+        // Si todos terminaron
         if (todosTerminados) {
             return true;
         }
 
-        // Registrar tabla de este momento
-        registrarTabla();
-
         // Avanzar tiempo
         tiempoActual++;
 
-        // Chequear bloqueos
+        // ===== PASO 2: verificar bloqueados reales =====
         if (todasMaquinasDisponibles()) {
+
             for (Proceso p : listaProcesos.getLista()) {
 
-                if (p.getEstado() != 4 && p.getEstado() != 1
-                        && p.getUnidadesTiempoRestante() > 0) {
+                if (p.getEstado() == 4 || p.getEstado() == 1) {
+                    continue;
+                }
 
-                    if (cambiarAEstadoBloqueado(p)) {
-                        cambiarEstadoProceso(p, 3);
-                    }
+                // Si sigue sin poder ejecutarse → BLOQUEADO REAL
+                if (cambiarAEstadoBloqueado(p)) {
+                    p.setEstado(3); // BLOQUEADO
                 }
             }
         }
 
-        return false; // Aún no ha terminado
+        return false; // Aún no termina
     }
 
     private boolean todasMaquinasDisponibles() {
@@ -433,6 +450,7 @@ public class AdministradorProcesos {
         }
         // LIBERAR MEMORIA
         m.liberarMemoria(p.getUnidadesMem());
+        m.liberarMemoriaMapa(p);
 
         // LIBERAR RECURSOS
         for (Recurso rP : p.getListaRecursosProcesos().getLista()) {
@@ -441,17 +459,6 @@ public class AdministradorProcesos {
 
         // Remover referencia
         p.setMaquinaAsignada(null);
-    }
-
-    //--- registro de tabla ---
-    private void registrarTabla() {
-        historialEjecucion.append(listarTablaDeEstados());
-        historialEjecucion.append("\n"); // Separador
-    }
-
-    //obtener procedimiento de tabla ejecutada
-    public String obtenerHistorialEjecucion() {
-        return historialEjecucion.toString();
     }
 
 }

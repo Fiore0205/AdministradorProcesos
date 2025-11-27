@@ -32,7 +32,7 @@ public class Maquina {
         cantidadNucleos = (int) (Math.random() * 4) + 1;
 
         listaRecursoMaquina = new ListaRecursos(15);
-        inicializarMapaMemoria();
+        listarMemoriaLibres();
     }
 
     // --- GETTERS Y SETTERS ---
@@ -205,11 +205,45 @@ public class Maquina {
     }
 
     //--- inicializar Mapa de Memoria ---
-    public void inicializarMapaMemoria() {
+    public void listarMemoriaLibres() {
         memoriaMapa = new ArrayList<>();
         for (int i = 0; i < unidadesMemoriaMaquina; i++) {
             memoriaMapa.add("L");
         }
+    }
+
+    // --- Asignar memoria y llenar mapa ---
+    public void ocuparMemoriaMapa(Proceso p) {
+        int cantidad = p.getUnidadesMem();
+        int asignados = 0;
+
+        for (int i = 0; i < memoriaMapa.size() && asignados < cantidad; i++) {
+            if (memoriaMapa.get(i).equals("L")) {
+                memoriaMapa.set(i, "P" + p.getNProceso());
+                asignados++;
+            }
+        }
+    }
+
+    public void liberarMemoriaMapa(Proceso p) {
+        String etiqueta = "P" + p.getNProceso();
+
+        for (int i = 0; i < memoriaMapa.size(); i++) {
+            if (memoriaMapa.get(i).equals(etiqueta)) {
+                memoriaMapa.set(i, "L");
+            }
+        }
+    }
+
+    public String mostrarMapaMemoria() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("%-4s", nombre + " "));
+
+        for (String celda : memoriaMapa) {
+            sb.append(String.format("%-3s", celda));
+        }
+        return sb.toString();
     }
 
 }

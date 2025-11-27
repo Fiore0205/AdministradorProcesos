@@ -118,4 +118,13 @@ public class ListaMaquinas {
         return sb.toString();
     }
 
+    public String mostrarMapaMemoriaTodas() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Maquina m : listaMaquinas) {
+            sb.append(m.mostrarMapaMemoria()).append("\n");
+        }
+        return sb.toString();
+    }
+
 }
