@@ -311,25 +311,11 @@ public class ControllerGeneral implements ActionListener {
     // MÉTODO CENTRALIZADO PARA CARGAR TODO EL MODO ODL
     public void ejecutarYMostrarODL() {
 
-        // 1. Mostrar tabla inicial
-        guiAdmin.setTxtAreaListaTablaEstadosODL(
-                administradorP.listarTablaDeEstados()
-        );
-
-        // 2. Mostrar recursos de todas las máquinas
-        guiAdmin.setTxtAreaListarRecursosMaquinasODL(
-                administradorP.listarRecursosTodasLasMaquinas()
-        );
-
-        // 3. Ejecutar el algoritmo
         administradorP.algoritmoOrdenDeLlegada();
 
-        // 4. Volver a actualizar tabla al finalizar
-        guiAdmin.setTxtAreaListaTablaEstadosODL(
-                administradorP.listarTablaDeEstados()
-        );
-
-        // (Opcional) actualizar recursos después de ejecución
+        // Obtener todo lo que se generó durante la ejecución
+        String tablaCompleta = administradorP.obtenerHistorialEjecucion();
+        guiAdmin.setTxtAreaListaTablaEstadosODL(tablaCompleta);
         guiAdmin.setTxtAreaListarRecursosMaquinasODL(
                 administradorP.listarRecursosTodasLasMaquinas()
         );

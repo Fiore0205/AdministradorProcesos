@@ -1211,10 +1211,10 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTMCActionPerformed
 
     private void btnODLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnODLActionPerformed
-        panel_parent.removeAll();
-        panel_parent.add(panel_ODL);
-        panel_parent.repaint();
-        panel_parent.revalidate();
+        //panel_parent.removeAll();
+        //panel_parent.add(panel_ODL);
+        //panel_parent.repaint();
+        //panel_parent.revalidate();
     }//GEN-LAST:event_btnODLActionPerformed
 
 

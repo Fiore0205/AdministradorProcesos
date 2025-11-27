@@ -17,11 +17,13 @@ public class AdministradorProcesos {
     private ListaMaquinas listaMaquinas;
     private Maquina maquina;
     private int tiempoActual;
+    private StringBuilder historialEjecucion;
 
     public AdministradorProcesos() {
         listaProcesos = new ListaProcesos();
         listaMaquinas = new ListaMaquinas();
         tiempoActual = 0;
+        historialEjecucion = new StringBuilder();
     }
 
     //getters y setters
@@ -347,7 +349,7 @@ public class AdministradorProcesos {
             }
 
             // IMPRIMIR TABLA
-            System.out.println(listarTablaDeEstados());
+            registrarTabla();
 
             // Verificar si todos están TERMINADOS o BLOQUEADOS
             todosTerminados = true;
@@ -450,6 +452,17 @@ public class AdministradorProcesos {
 
         // Remover referencia
         p.setMaquinaAsignada(null);
+    }
+
+    //--- registro de tabla ---
+    private void registrarTabla() {
+        historialEjecucion.append(listarTablaDeEstados());
+        historialEjecucion.append("\n"); // Separador
+    }
+
+    //obtener procedimiento de tabla ejecutada
+    public String obtenerHistorialEjecucion() {
+        return historialEjecucion.toString();
     }
 
 }
