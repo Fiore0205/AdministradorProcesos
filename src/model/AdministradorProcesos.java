@@ -145,17 +145,17 @@ public class AdministradorProcesos {
 //    ALGORITMOs DE PLANIFICACION
 // ============================================================
     public void algoritmoOrdenDeLlegada() {
-        ejecucionDeProcesos();
+        ejecutarPaso();
     }
 
     public void algoritmoPrioridad() {
         listaProcesos.ordenarPrioridad();
-        ejecucionDeProcesos();
+        ejecutarPaso();
     }
 
     public void algoritmoTiempoMasCorto() {
         listaProcesos.ordenarTiempo();
-        ejecucionDeProcesos();
+        ejecutarPaso();
     }
 
     // ============================================================
@@ -302,87 +302,76 @@ public class AdministradorProcesos {
     // ============================================================
 //       MÉTODO PRINCIPAL DE EJECUCIÓN DE PROCESOS (FIFO)
 // ============================================================
-    public void ejecucionDeProcesos() {
+    public boolean ejecutarPaso() {
 
-        boolean todosTerminados = false;
+        boolean todosTerminados = true;
 
-        while (!todosTerminados) {
+        // ===== PASO 1: revisar procesos en este tiempo actual =====
+        for (Proceso p : listaProcesos.getLista()) {
 
-            // Paso 1: Revisar todos los procesos en este tiempo ACTUAL
+            // Si está terminado o bloqueado, seguir
+            if (p.getEstado() == 4 || p.getEstado() == 3) {
+                continue;
+            }
+
+            todosTerminados = false;
+
+            // Terminado por tiempo
+            if (p.getUnidadesTiempoRestante() == 0) {
+                cambiarEstadoProceso(p, 4); // TERMINADO
+                liberarRecursosYMemoria(p);
+                continue;
+            }
+
+            // Ya tiene máquina asignada → solo ejecutar
+            if (p.getMaquinaAsignada() != null) {
+                cambiarEstadoProceso(p, 1);
+                tiempoProcesoRestante(p);
+                continue;
+            }
+
+            // Buscar máquina válida
+            Maquina m = buscarMaquinaValida(p);
+
+            if (m == null) {
+                cambiarEstadoProceso(p, 2); // ESPERA
+                continue;
+            }
+
+            // Asignar y ejecutar
+            p.setMaquinaAsignada(m);
+            asignarMemoriaAProceso(p);
+            asignarRecursosAProceso(p);
+
+            cambiarEstadoProceso(p, 1);
+            tiempoProcesoRestante(p);
+        }
+        // Si todos están listos → FIN
+        if (todosTerminados) {
+            return true;
+        }
+
+        // Registrar tabla de este momento
+        registrarTabla();
+
+        // Avanzar tiempo
+        tiempoActual++;
+
+        // Chequear bloqueos
+        if (todasMaquinasDisponibles()) {
             for (Proceso p : listaProcesos.getLista()) {
 
-                // Si ya está TERMINADO o BLOQUEADO, no hacemos nada
-                if (p.getEstado() == 4 || p.getEstado() == 3) {
-                    continue;
-                }
+                if (p.getEstado() != 4 && p.getEstado() != 1
+                        && p.getUnidadesTiempoRestante() > 0) {
 
-                // Si ya no le queda tiempo, marcar TERMINADO y liberar
-                if (p.getUnidadesTiempoRestante() == 0) {
-                    cambiarEstadoProceso(p, 4);
-                    liberarRecursosYMemoria(p);
-                    continue;
-                }
-
-                // Si YA tiene una máquina asignada, solo ejecutar
-                if (p.getMaquinaAsignada() != null) {
-                    cambiarEstadoProceso(p, 1);   // ACTIVO
-                    tiempoProcesoRestante(p);     // solo baja si está ACTIVO
-                    continue;
-                }
-
-                // Si NO tiene máquina asignada, buscar una que sirva
-                Maquina m = buscarMaquinaValida(p);
-
-                if (m == null) {
-                    // No hay máquina que lo pueda correr en este momento
-                    cambiarEstadoProceso(p, 2);   // ESPERA
-                    continue;
-                }
-
-                // Asignar máquina y recursos por primera vez
-                p.setMaquinaAsignada(m);
-                asignarMemoriaAProceso(p);
-                asignarRecursosAProceso(p);
-
-                cambiarEstadoProceso(p, 1);       // ACTIVO
-                tiempoProcesoRestante(p);
-            }
-
-            // IMPRIMIR TABLA
-            registrarTabla();
-
-            // Verificar si todos están TERMINADOS o BLOQUEADOS
-            todosTerminados = true;
-            for (Proceso px : listaProcesos.getLista()) {
-                if (px.getEstado() != 4 && px.getEstado() != 3) {
-                    todosTerminados = false;
-                    break;
-                }
-            }
-
-            if (todosTerminados) {
-                break;
-            }
-
-            // Avanzar tiempo
-            tiempoActual++;
-
-            // SOLO bloqueamos procesos cuando TODAS las máquinas están disponibles
-            if (todasMaquinasDisponibles()) {
-                for (Proceso p : listaProcesos.getLista()) {
-
-                    if (p.getUnidadesTiempoRestante() > 0
-                            && p.getEstado() != 4
-                            && p.getEstado() != 1) { // no bloquear activos ni terminados
-
-                        if (cambiarAEstadoBloqueado(p)) {
-                            cambiarEstadoProceso(p, 3); // BLOQUEADO
-                        }
+                    if (cambiarAEstadoBloqueado(p)) {
+                        cambiarEstadoProceso(p, 3);
                     }
                 }
             }
+        }
 
-        } // FIN WHILE
+        return false; // Aún no ha terminado
     }
 
     private boolean todasMaquinasDisponibles() {

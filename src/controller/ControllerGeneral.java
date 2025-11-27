@@ -8,6 +8,7 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import model.AdministradorProcesos;
 import view.GUIAdministradorProcesos;
 import view.GUIRecurso;
@@ -24,6 +25,9 @@ public class ControllerGeneral implements ActionListener {
     private int contador;
     private boolean procesoAsignado;
     private boolean maquinaCreada;
+    private Timer timerODL;
+    private int tiempoSimulacion;
+    private boolean ejecutandoODL;
 
     public ControllerGeneral() {
         administradorP = new AdministradorProcesos();
@@ -31,6 +35,8 @@ public class ControllerGeneral implements ActionListener {
         contador = 0;
         procesoAsignado = false;
         maquinaCreada = false;
+        ejecutandoODL = false;
+        tiempoSimulacion = 0;
         initEvents();
         guiAdmin.setVisible(true);
     }
@@ -52,7 +58,7 @@ public class ControllerGeneral implements ActionListener {
         guiAdmin.getBtnAgregarMaquina().addActionListener(this);
         guiAdmin.getBtnAsignarRecursosMaquina().addActionListener(this);
 
-        // ---------- OORDEN DE LLEGADA --------
+        // ---------- ORDEN DE LLEGADA --------
         guiAdmin.getBtnODL().addActionListener(this);
     }
 
@@ -105,14 +111,13 @@ public class ControllerGeneral implements ActionListener {
         // ---------- ORDEN DE LLEGADA ----------
         if (e.getSource() == guiAdmin.getBtnODL()) {
 
-            // CAMBIAR PANEL DESDE EL CONTROLLER
             guiAdmin.getPanel_parent().removeAll();
             guiAdmin.getPanel_parent().add(guiAdmin.getPanel_ODL());
             guiAdmin.getPanel_parent().repaint();
             guiAdmin.getPanel_parent().revalidate();
 
             // LLAMAR MÉTODO QUE ARMA TABLAS Y EJECUTA EL ALGORITMO
-            ejecutarYMostrarODL();
+            iniciarTimerODL();
         }
 
     }
@@ -308,17 +313,46 @@ public class ControllerGeneral implements ActionListener {
         listarRecursosMaquina();
     }
 
-    // MÉTODO CENTRALIZADO PARA CARGAR TODO EL MODO ODL
-    public void ejecutarYMostrarODL() {
+    public void iniciarTimerODL() {
 
-        administradorP.algoritmoOrdenDeLlegada();
+        // Evitar que se ejecute dos veces
+        if (ejecutandoODL) {
+            JOptionPane.showMessageDialog(guiAdmin, "La simulación ya está en curso.");
+            return;
+        }
 
-        // Obtener todo lo que se generó durante la ejecución
-        String tablaCompleta = administradorP.obtenerHistorialEjecucion();
-        guiAdmin.setTxtAreaListaTablaEstadosODL(tablaCompleta);
-        guiAdmin.setTxtAreaListarRecursosMaquinasODL(
-                administradorP.listarRecursosTodasLasMaquinas()
-        );
+        ejecutandoODL = true;
+        tiempoSimulacion = 0;
+
+        timerODL = new Timer(1000, new ActionListener() {   // 1 segundo
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                boolean terminado = administradorP.ejecutarPaso();
+
+                // Actualizar tabla en GUI
+                guiAdmin.setTxtAreaListaTablaEstadosODL(
+                        administradorP.obtenerHistorialEjecucion()
+                );
+
+                // Actualizar recursos de máquina
+                guiAdmin.setTxtAreaListarRecursosMaquinasODL(
+                        administradorP.listarRecursosTodasLasMaquinas()
+                );
+
+                tiempoSimulacion++;
+
+                // Si terminó, detener timer
+                if (terminado) {
+                    timerODL.stop();
+                    ejecutandoODL = false;
+                    JOptionPane.showMessageDialog(guiAdmin,
+                            "La simulación ODL ha finalizado.");
+                }
+            }
+        });
+
+        timerODL.start(); // INICIA
     }
 
 }
