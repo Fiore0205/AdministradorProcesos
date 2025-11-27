@@ -60,6 +60,13 @@ public class ControllerGeneral implements ActionListener {
 
         // ---------- ORDEN DE LLEGADA --------
         guiAdmin.getBtnODL().addActionListener(this);
+
+        // ---------- PRIORIDAD --------
+        guiAdmin.getBtnPRI().addActionListener(this);
+
+        // ---------- TIEMPO + CORTO --------
+        guiAdmin.getBtnTMC().addActionListener(this);
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -119,6 +126,8 @@ public class ControllerGeneral implements ActionListener {
             // LLAMAR MÉTODO QUE ARMA TABLAS Y EJECUTA EL ALGORITMO
             iniciarTimerODL();
         }
+        
+        
 
     }
 
