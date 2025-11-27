@@ -252,23 +252,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     public void setBtnCM(JButton btnCM) {
         this.btnCM = btnCM;
     }
-
-    public JButton getBtnIniciarODL() {
-        return btnIniciarODL;
-    }
-
-    public void setBtnIniciarODL(JButton btnIniciarODL) {
-        this.btnIniciarODL = btnIniciarODL;
-    }
-
-    public JButton getBtnIniciarTMC() {
-        return btnIniciarTMC;
-    }
-
-    public void setBtnIniciarTMC(JButton btnIniciarTMC) {
-        this.btnIniciarTMC = btnIniciarTMC;
-    }
-
+    
     public JButton getBtnODL() {
         return btnODL;
     }
@@ -285,22 +269,14 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         this.btnPRI = btnPRI;
     }
 
-    public JButton getBtnPararODL() {
-        return btnPararODL;
+    public JButton getBtnParar() {
+        return btnParar;
     }
 
-    public void setBtnPararODL(JButton btnPararODL) {
-        this.btnPararODL = btnPararODL;
+    public JButton getBtnIniciar() {
+        return btnIniciar;
     }
-
-    public JButton getBtnPararTMC() {
-        return btnPararTMC;
-    }
-
-    public void setBtnPararTMC(JButton btnPararTMC) {
-        this.btnPararTMC = btnPararTMC;
-    }
-
+    
     public JButton getBtnRR() {
         return btnRR;
     }
@@ -398,19 +374,19 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     }
 
     public JButton getBtnIniciarPRI() {
-        return btnIniciarPRI;
+        return btnIniciar;
     }
 
     public void setBtnIniciarPRI(JButton btnIniciarPRI) {
-        this.btnIniciarPRI = btnIniciarPRI;
+        this.btnIniciar = btnIniciarPRI;
     }
 
     public JButton getBtnPararPRI() {
-        return btnPararPRI;
+        return btnParar;
     }
 
     public void setBtnPararPRI(JButton btnPararPRI) {
-        this.btnPararPRI = btnPararPRI;
+        this.btnParar = btnPararPRI;
     }
 
     public String getTxtAreaListaTablaEstadosPRI() {
@@ -434,9 +410,17 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     }
 
     public void setTxtAreaMemoriaMaquinasPRI(String txtAreaMemoriaMaquinasPRI) {
-        this.txtAreaMemoriaMaquinasPRI.getText();
+        this.txtAreaMemoriaMaquinasPRI.setText(txtAreaMemoriaMaquinasPRI);
     }
-    
+
+    public JPanel getPanel_PRI() {
+        return panel_PRI;
+    }
+
+    public void setPanel_PRI(JPanel panel_PRI) {
+        this.panel_PRI = panel_PRI;
+    }
+     
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -503,10 +487,10 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         btnRR = new javax.swing.JButton();
         btnPRI = new javax.swing.JButton();
         btnCM = new javax.swing.JButton();
+        btnIniciar = new javax.swing.JButton();
+        btnParar = new javax.swing.JButton();
         panel_parent = new javax.swing.JPanel();
         panel_TMC = new javax.swing.JPanel();
-        btnIniciarTMC = new javax.swing.JButton();
-        btnPararTMC = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         txtAreaListaTablaEstadosTMC = new javax.swing.JTextArea();
         jScrollPane9 = new javax.swing.JScrollPane();
@@ -522,13 +506,9 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         txtAreaMemoriaMaquinasODL = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
-        btnIniciarODL = new javax.swing.JButton();
-        btnPararODL = new javax.swing.JButton();
         panel_PRI = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
         txtAreaListaTablaEstadosPRI = new javax.swing.JTextArea();
-        btnIniciarPRI = new javax.swing.JButton();
-        btnPararPRI = new javax.swing.JButton();
         jScrollPane12 = new javax.swing.JScrollPane();
         txtAreaListarRecursosMaquinasPRI = new javax.swing.JTextArea();
         jScrollPane13 = new javax.swing.JScrollPane();
@@ -986,19 +966,30 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         btnCM.setBackground(new java.awt.Color(204, 204, 255));
         btnCM.setText("Colas Múltiples");
 
+        btnIniciar.setText("Iniciar");
+
+        btnParar.setText("Parar");
+
         javax.swing.GroupLayout panel_botones_algoritmosLayout = new javax.swing.GroupLayout(panel_botones_algoritmos);
         panel_botones_algoritmos.setLayout(panel_botones_algoritmosLayout);
         panel_botones_algoritmosLayout.setHorizontalGroup(
             panel_botones_algoritmosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_botones_algoritmosLayout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addGroup(panel_botones_algoritmosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCM, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRR, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnODL, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTMC, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGroup(panel_botones_algoritmosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_botones_algoritmosLayout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addGroup(panel_botones_algoritmosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCM, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRR, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnODL, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTMC, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panel_botones_algoritmosLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnParar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         panel_botones_algoritmosLayout.setVerticalGroup(
             panel_botones_algoritmosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1013,7 +1004,11 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                 .addComponent(btnPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCM, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addGroup(panel_botones_algoritmosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnIniciar)
+                    .addComponent(btnParar))
+                .addGap(41, 41, 41))
         );
 
         jPanel4.add(panel_botones_algoritmos);
@@ -1022,10 +1017,6 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         panel_parent.setLayout(new java.awt.CardLayout());
 
         panel_TMC.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 204)));
-
-        btnIniciarTMC.setText("Iniciar");
-
-        btnPararTMC.setText("Parar");
 
         txtAreaListaTablaEstadosTMC.setColumns(20);
         txtAreaListaTablaEstadosTMC.setRows(5);
@@ -1061,22 +1052,13 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                             .addGroup(panel_TMCLayout.createSequentialGroup()
                                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panel_TMCLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnIniciarTMC, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnPararTMC, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(27, 27, 27))
         );
         panel_TMCLayout.setVerticalGroup(
             panel_TMCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_TMCLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(panel_TMCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIniciarTMC)
-                    .addComponent(btnPararTMC))
-                .addGap(37, 37, 37)
+                .addGap(93, 93, 93)
                 .addGroup(panel_TMCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1109,10 +1091,6 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Mapa Memoria");
 
-        btnIniciarODL.setText("Iniciar");
-
-        btnPararODL.setText("Parar");
-
         javax.swing.GroupLayout panel_ODLLayout = new javax.swing.GroupLayout(panel_ODL);
         panel_ODL.setLayout(panel_ODLLayout);
         panel_ODLLayout.setHorizontalGroup(
@@ -1130,22 +1108,13 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                             .addGroup(panel_ODLLayout.createSequentialGroup()
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panel_ODLLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnIniciarODL, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnPararODL, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(27, 27, 27))
         );
         panel_ODLLayout.setVerticalGroup(
             panel_ODLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_ODLLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(panel_ODLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIniciarODL)
-                    .addComponent(btnPararODL))
-                .addGap(37, 37, 37)
+                .addGap(93, 93, 93)
                 .addGroup(panel_ODLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1158,13 +1127,11 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
 
         panel_parent.add(panel_ODL, "card2");
 
+        panel_PRI.setBackground(new java.awt.Color(51, 51, 255));
+
         txtAreaListaTablaEstadosPRI.setColumns(20);
         txtAreaListaTablaEstadosPRI.setRows(5);
         jScrollPane11.setViewportView(txtAreaListaTablaEstadosPRI);
-
-        btnIniciarPRI.setText("Iniciar");
-
-        btnPararPRI.setText("Parar");
 
         txtAreaListarRecursosMaquinasPRI.setColumns(20);
         txtAreaListarRecursosMaquinasPRI.setRows(5);
@@ -1196,22 +1163,13 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                             .addGroup(panel_PRILayout.createSequentialGroup()
                                 .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panel_PRILayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnIniciarPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnPararPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(27, 27, 27))
         );
         panel_PRILayout.setVerticalGroup(
             panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_PRILayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIniciarPRI)
-                    .addComponent(btnPararPRI))
-                .addGap(37, 37, 37)
+                .addGap(93, 93, 93)
                 .addGroup(panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1342,16 +1300,12 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearProceso;
     private javax.swing.JButton btnEliminarMaquina;
     private javax.swing.JButton btnEliminarProceso;
-    private javax.swing.JButton btnIniciarODL;
-    private javax.swing.JButton btnIniciarPRI;
-    private javax.swing.JButton btnIniciarTMC;
+    private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnModificarMaquina;
     private javax.swing.JButton btnModificarProceso;
     private javax.swing.JButton btnODL;
     private javax.swing.JButton btnPRI;
-    private javax.swing.JButton btnPararODL;
-    private javax.swing.JButton btnPararPRI;
-    private javax.swing.JButton btnPararTMC;
+    private javax.swing.JButton btnParar;
     private javax.swing.JButton btnRR;
     private javax.swing.JButton btnTMC;
     private javax.swing.JLabel jLabel1;

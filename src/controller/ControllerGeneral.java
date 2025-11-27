@@ -28,6 +28,7 @@ public class ControllerGeneral implements ActionListener {
     private Timer timer;
     private int tiempoSimulacion;
     private boolean ejecutando;
+    private int algoritmoPlActual;
 
     public ControllerGeneral() {
         administradorP = new AdministradorProcesos();
@@ -37,6 +38,7 @@ public class ControllerGeneral implements ActionListener {
         maquinaCreada = false;
         ejecutando = false;
         tiempoSimulacion = 0;
+        algoritmoPlActual = 0;
         initEvents();
         guiAdmin.setVisible(true);
     }
@@ -66,6 +68,10 @@ public class ControllerGeneral implements ActionListener {
 
         // ---------- TIEMPO + CORTO --------
         guiAdmin.getBtnTMC().addActionListener(this);
+
+        // ---------- Botones de parar e iniciar --------
+        guiAdmin.getBtnIniciar().addActionListener(this);
+        guiAdmin.getBtnParar().addActionListener(this);
 
     }
 
@@ -117,36 +123,26 @@ public class ControllerGeneral implements ActionListener {
 
         // ---------- ORDEN DE LLEGADA ----------
         if (e.getSource() == guiAdmin.getBtnODL()) {
-
-            guiAdmin.getPanel_parent().removeAll();
-            guiAdmin.getPanel_parent().add(guiAdmin.getPanel_ODL());
-            guiAdmin.getPanel_parent().repaint();
-            guiAdmin.getPanel_parent().revalidate();
-
-            // LLAMAR MÉTODO QUE ARMA TABLAS Y EJECUTA EL ALGORITMO
-            iniciarTimer(0);
+            algoritmoPlActual = 0;
+            cambioDePanel(0);
         }
 
         // ---------- PRIORIDAD ----------
         if (e.getSource() == guiAdmin.getBtnPRI()) {
-
-            guiAdmin.getPanel_parent().removeAll();
-            //guiAdmin.getPanel_parent().add(guiAdmin.getPanel_Prioridad());
-            guiAdmin.getPanel_parent().repaint();
-            guiAdmin.getPanel_parent().revalidate();
-
-            iniciarTimer(2);
+            algoritmoPlActual = 2;
+            cambioDePanel(2);
         }
 
         // ---------- TMC ----------
         if (e.getSource() == guiAdmin.getBtnTMC()) {
+            algoritmoPlActual = 1;
+            cambioDePanel(1);
+        }
 
-            guiAdmin.getPanel_parent().removeAll();
-            guiAdmin.getPanel_parent().add(guiAdmin.getPanel_TMC());
-            guiAdmin.getPanel_parent().repaint();
-            guiAdmin.getPanel_parent().revalidate();
-
-            iniciarTimer(1);
+        // ---------- BOTON INICIAR ----------
+        if (e.getSource() == guiAdmin.getBtnIniciar()) {
+            cambioDePanel(algoritmoPlActual);
+            iniciarTimer(algoritmoPlActual);
         }
 
     }
@@ -412,6 +408,20 @@ public class ControllerGeneral implements ActionListener {
 
             guiAdmin.setTxtAreaMemoriaMaquinasPRI(administradorP.listarMapaMemoria());
         }
+    }
+
+    public void cambioDePanel(int tipoAlgoritmo) {
+        guiAdmin.getPanel_parent().removeAll();
+        // 0 = ODL  1 = TMC  2 = PRI
+        if (tipoAlgoritmo == 0) {
+            guiAdmin.getPanel_parent().add(guiAdmin.getPanel_ODL());
+        } else if (tipoAlgoritmo == 1) {
+            guiAdmin.getPanel_parent().add(guiAdmin.getPanel_TMC());
+        } else if (tipoAlgoritmo == 2) {
+            guiAdmin.getPanel_parent().add(guiAdmin.getPanel_PRI());
+        }
+        guiAdmin.getPanel_parent().repaint();
+        guiAdmin.getPanel_parent().revalidate();
     }
 
 }
