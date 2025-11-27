@@ -25,9 +25,9 @@ public class ControllerGeneral implements ActionListener {
     private int contador;
     private boolean procesoAsignado;
     private boolean maquinaCreada;
-    private Timer timerODL;
+    private Timer timer;
     private int tiempoSimulacion;
-    private boolean ejecutandoODL;
+    private boolean ejecutando;
 
     public ControllerGeneral() {
         administradorP = new AdministradorProcesos();
@@ -35,7 +35,7 @@ public class ControllerGeneral implements ActionListener {
         contador = 0;
         procesoAsignado = false;
         maquinaCreada = false;
-        ejecutandoODL = false;
+        ejecutando = false;
         tiempoSimulacion = 0;
         initEvents();
         guiAdmin.setVisible(true);
@@ -124,7 +124,7 @@ public class ControllerGeneral implements ActionListener {
             guiAdmin.getPanel_parent().revalidate();
 
             // LLAMAR MÉTODO QUE ARMA TABLAS Y EJECUTA EL ALGORITMO
-            iniciarTimerODL();
+            iniciarTimer(0);
         }
 
         // ---------- PRIORIDAD ----------
@@ -135,7 +135,7 @@ public class ControllerGeneral implements ActionListener {
             guiAdmin.getPanel_parent().repaint();
             guiAdmin.getPanel_parent().revalidate();
 
-            iniciarTimerPrioridad();
+            iniciarTimer(2);
         }
 
         // ---------- TMC ----------
@@ -146,7 +146,7 @@ public class ControllerGeneral implements ActionListener {
             guiAdmin.getPanel_parent().repaint();
             guiAdmin.getPanel_parent().revalidate();
 
-            iniciarTimerSJF();
+            iniciarTimer(1);
         }
 
     }
@@ -342,135 +342,76 @@ public class ControllerGeneral implements ActionListener {
         listarRecursosMaquina();
     }
 
-    public void iniciarTimerODL() {
+    public void iniciarTimer(int tipoAlgoritmo) {
 
         // Evitar que se ejecute dos veces
-        if (ejecutandoODL) {
+        if (ejecutando) {
             JOptionPane.showMessageDialog(guiAdmin, "La simulación ya está en curso.");
             return;
         }
 
-        ejecutandoODL = true;
+        ejecutando = true;
         tiempoSimulacion = 0;
 
-        timerODL = new Timer(1000, new ActionListener() {   // 1 segundo
+        ordenarTipoAlgoritmo(tipoAlgoritmo);
+
+        timer = new Timer(1000, new ActionListener() {   // 1 segundo
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 boolean terminado = administradorP.ejecutarPaso();
-
-                // Actualizar tabla en GUI
-                guiAdmin.setTxtAreaListaTablaEstadosODL(
-                        administradorP.listarTablaDeEstados()
-                );
-
-                // Actualizar recursos de máquina
-                guiAdmin.setTxtAreaListarRecursosMaquinasODL(
-                        administradorP.listarRecursosTodasLasMaquinas()
-                );
-
-                // Actualizar memoria de las maquinas
-                guiAdmin.setTxtAreaMemoriaMaquinasODL(administradorP.listarMapaMemoria());
-
+                listarTipoDeAlgoritmo(tipoAlgoritmo);
                 tiempoSimulacion++;
 
                 // Si terminó, detener timer
                 if (terminado) {
-                    timerODL.stop();
-                    ejecutandoODL = false;
+                    timer.stop();
+                    ejecutando = false;
                     JOptionPane.showMessageDialog(guiAdmin,
-                            "La simulación ODL ha finalizado.");
+                            "La simulación ha finalizado.");
                 }
             }
         });
 
-        timerODL.start(); // INICIA
+        timer.start(); // INICIA
     }
 
-    public void iniciarTimerPrioridad() {
+    public void ordenarTipoAlgoritmo(int tipoAlgoritmo) {
+        // 1 = TMC  2 = PRI
+        if (tipoAlgoritmo == 1) {
+            administradorP.ordenarTiempoMasCorto();
 
-        if (ejecutandoODL) {
-            JOptionPane.showMessageDialog(guiAdmin, "Una simulación ya está en curso.");
-            return;
+        } else if (tipoAlgoritmo == 2) {
+            administradorP.ordenarPrioridad();
         }
-
-        ejecutandoODL = true;
-        tiempoSimulacion = 0;
-
-        // 🔥 ORDENAR POR PRIORIDAD ANTES DE EMPEZAR
-        administradorP.getListaProcesos().ordenarPrioridad();
-
-        timerODL = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                boolean terminado = administradorP.ejecutarPaso();
-
-               /* guiAdmin.setTxtAreaTablaPrioridad(
-                        administradorP.listarTablaDeEstados()
-                );
-
-                guiAdmin.setTxtAreaRecursosPrioridad(
-                        administradorP.listarRecursosTodasLasMaquinas()
-                );
-
-                guiAdmin.setTxtAreaMemoriaPrioridad(
-                        administradorP.listarMapaMemoria()
-                );*/
-
-                if (terminado) {
-                    timerODL.stop();
-                    ejecutandoODL = false;
-                    JOptionPane.showMessageDialog(guiAdmin,
-                            "La simulación por Prioridad ha terminado.");
-                }
-            }
-        });
-
-        timerODL.start();
     }
 
-    public void iniciarTimerSJF() {
+    public void listarTipoDeAlgoritmo(int tipoAlgoritmo) {
+        // 0 = ODL  1 = TMC  2 = PRI
+        if (tipoAlgoritmo == 0) {
+            // Actualizar tabla en GUI
+            guiAdmin.setTxtAreaListaTablaEstadosODL(administradorP.listarTablaDeEstados());
 
-    if (ejecutandoODL) {
-        JOptionPane.showMessageDialog(guiAdmin, "Una simulación ya está en curso.");
-        return;
-    }
+            // Actualizar recursos de máquina
+            guiAdmin.setTxtAreaListarRecursosMaquinasODL(administradorP.listarRecursosTodasLasMaquinas());
 
-    ejecutandoODL = true;
-    tiempoSimulacion = 0;
+            // Actualizar memoria de las maquinas
+            guiAdmin.setTxtAreaMemoriaMaquinasODL(administradorP.listarMapaMemoria());
+            
+        } else if (tipoAlgoritmo == 1) {
+            guiAdmin.setTxtAreaListaTablaEstadosTMC(administradorP.listarTablaDeEstados());
 
-    // 🔥 ORDENAR POR TIEMPO MÁS CORTO ANTES DE EMPEZAR
-    administradorP.getListaProcesos().ordenarTiempo();
+            guiAdmin.setTxtAreaListarRecursosMaquinasTMC(administradorP.listarRecursosTodasLasMaquinas());
 
-    timerODL = new Timer(1000, new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+            guiAdmin.setTxtAreaMemoriaMaquinasTMC(administradorP.listarMapaMemoria());
+            
+        } else if (tipoAlgoritmo == 2) {
+            /* guiAdmin.setTxtAreaTablaPrioridad(administradorP.listarTablaDeEstados());
 
-            boolean terminado = administradorP.ejecutarPaso();
+                guiAdmin.setTxtAreaRecursosPrioridad(administradorP.listarRecursosTodasLasMaquinas());
 
-            guiAdmin.setTxtAreaListaTablaEstadosTMC(
-                    administradorP.listarTablaDeEstados()
-            );
-
-            guiAdmin.setTxtAreaListarRecursosMaquinasTMC(
-                    administradorP.listarRecursosTodasLasMaquinas()
-            );
-
-            guiAdmin.setTxtAreaMemoriaMaquinasTMC(
-                    administradorP.listarMapaMemoria()
-            );
-
-            if (terminado) {
-                timerODL.stop();
-                ejecutandoODL = false;
-                JOptionPane.showMessageDialog(guiAdmin,
-                        "La simulación SJF ha terminado.");
-            }
+                guiAdmin.setTxtAreaMemoriaPrioridad(administradorP.listarMapaMemoria());*/
         }
-    });
-
-    timerODL.start();
-}
+    }
 
 }

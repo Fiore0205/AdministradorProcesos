@@ -144,20 +144,15 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
-//    ALGORITMOs DE PLANIFICACION
+//    Ordenar
 // ============================================================
-    public void algoritmoOrdenDeLlegada() {
-        ejecutarPaso();
-    }
 
-    public void algoritmoPrioridad() {
+    public void ordenarPrioridad() {
         listaProcesos.ordenarPrioridad();
-        ejecutarPaso();
     }
 
-    public void algoritmoTiempoMasCorto() {
+    public void ordenarTiempoMasCorto() {
         listaProcesos.ordenarTiempo();
-        ejecutarPaso();
     }
 
     // ============================================================
