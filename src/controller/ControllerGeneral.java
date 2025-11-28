@@ -150,8 +150,7 @@ public class ControllerGeneral implements ActionListener {
 
         // ---------- BOTON INICIAR ----------
         if (e.getSource() == guiAdmin.getBtnIniciar()) {
-            cambioDePanel(algoritmoPlActual);
-            iniciarTimer(algoritmoPlActual);
+            inicializarAlgoritmoEstatico(algoritmoPlActual);
         }
 
         // ---------- BOTON PARAR ----------
@@ -254,9 +253,44 @@ public class ControllerGeneral implements ActionListener {
     }
 
     public void agregarProcesoALista() {
-        administradorP.agregarProceso();
-        limpiarCampos();
-        listarProcesos();
+
+        // Crear el proceso con los campos del GUI
+        crearProceso();  // ya tienes este método y deja "proceso" listo
+
+        String modo = "";
+        if (algoritmoPlActual == 0) {
+            modo = guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString();
+        } else if (algoritmoPlActual == 1) {
+            modo = guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString();
+        } else if (algoritmoPlActual == 2) {
+            modo = guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString();
+        } else if (algoritmoPlActual == 3) {
+            modo = guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString();
+        }
+
+        // ------------------------------
+        //     MODO ESTÁTICO
+        // ------------------------------
+        if (modo.equals("Simulación Estática")) {
+            administradorP.agregarProceso();
+            limpiarCampos();
+            listarProcesos();
+            return;
+        }
+
+        // ------------------------------
+        //     MODO DINÁMICO (HOT)
+        // ------------------------------
+        if (modo.equals("Simulación Dinámica")) {
+
+            administradorP.agregarProcesoDinamico(administradorP.getProceso(), algoritmoPlActual);
+
+            JOptionPane.showMessageDialog(guiAdmin,
+                    "Proceso insertado dinámicamente en la cola.");
+
+            limpiarCampos();
+            listarProcesos();
+        }
     }
 
     // --- METODOS DE TXT AREAS DE PROCESOS ---
@@ -446,7 +480,7 @@ public class ControllerGeneral implements ActionListener {
             guiAdmin.setTxtAreaListarRecursosMaquinasPRI(administradorP.listarRecursosTodasLasMaquinas());
 
             guiAdmin.setTxtAreaMemoriaMaquinasPRI(administradorP.listarMapaMemoria());
-            
+
         } else if (tipoAlgoritmo == 3) {
             guiAdmin.setTxtAreaListaTablaEstadosRR(administradorP.listarTablaDeEstados());
         }
@@ -462,7 +496,7 @@ public class ControllerGeneral implements ActionListener {
             guiAdmin.getPanel_parent().add(guiAdmin.getPanel_TMC());
         } else if (tipoAlgoritmo == 2) {
             guiAdmin.getPanel_parent().add(guiAdmin.getPanel_PRI());
-        }else if (tipoAlgoritmo == 3) {
+        } else if (tipoAlgoritmo == 3) {
             guiAdmin.getPanel_parent().add(guiAdmin.getPanel_RR());
         }
         guiAdmin.getPanel_parent().repaint();
@@ -474,6 +508,22 @@ public class ControllerGeneral implements ActionListener {
             timer.stop();          // Pausa la simulación
             ejecutando = false;    // Indica que YA NO está ejecutando
             JOptionPane.showMessageDialog(guiAdmin, "La simulación se ha detenido.");
+        }
+    }
+
+    public void inicializarAlgoritmoEstatico(int tipoAlgoritmo) {
+        if (tipoAlgoritmo == 0 && guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString().equals("Simulación Estática")) {
+            cambioDePanel(tipoAlgoritmo);
+            iniciarTimer(tipoAlgoritmo);
+        } else if (tipoAlgoritmo == 1 && guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString().equals("Simulación Estática")) {
+            cambioDePanel(tipoAlgoritmo);
+            iniciarTimer(tipoAlgoritmo);
+        } else if (tipoAlgoritmo == 2 && guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString().equals("Simulación Estática")) {
+            cambioDePanel(tipoAlgoritmo);
+            iniciarTimer(tipoAlgoritmo);
+        } else if (tipoAlgoritmo == 3 && guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString().equals("Simulación Estática")) {
+            cambioDePanel(tipoAlgoritmo);
+            iniciarTimer(tipoAlgoritmo);
         }
     }
 

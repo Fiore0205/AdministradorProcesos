@@ -956,12 +956,19 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="boxTipoSimulacionTMC" min="-2" pref="188" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="boxTipoSimulacionTMC" min="-2" pref="41" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jScrollPane9" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
                                       <Component id="jScrollPane8" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
@@ -1033,6 +1040,24 @@
                             <Property name="text" type="java.lang.String" value="Mapa Memoria"/>
                           </Properties>
                         </Component>
+                        <Component class="javax.swing.JComboBox" name="boxTipoSimulacionTMC">
+                          <Properties>
+                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                              <StringArray count="4">
+                                <StringItem index="0" value="Item 1"/>
+                                <StringItem index="1" value="Item 2"/>
+                                <StringItem index="2" value="Item 3"/>
+                                <StringItem index="3" value="Item 4"/>
+                              </StringArray>
+                            </Property>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boxTipoSimulacionTMCActionPerformed"/>
+                          </Events>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                          </AuxValues>
+                        </Component>
                       </SubComponents>
                     </Container>
                     <Container class="javax.swing.JPanel" name="panel_ODL">
@@ -1078,12 +1103,19 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="boxTipoSimulacionODL" min="-2" pref="188" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                  <Component id="boxTipoSimulacionODL" min="-2" pref="41" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jScrollPane6" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
                                       <Component id="jScrollPane5" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
@@ -1155,6 +1187,24 @@
                             <Property name="text" type="java.lang.String" value="Mapa Memoria"/>
                           </Properties>
                         </Component>
+                        <Component class="javax.swing.JComboBox" name="boxTipoSimulacionODL">
+                          <Properties>
+                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                              <StringArray count="4">
+                                <StringItem index="0" value="Item 1"/>
+                                <StringItem index="1" value="Item 2"/>
+                                <StringItem index="2" value="Item 3"/>
+                                <StringItem index="3" value="Item 4"/>
+                              </StringArray>
+                            </Property>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boxTipoSimulacionODLActionPerformed"/>
+                          </Events>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                          </AuxValues>
+                        </Component>
                       </SubComponents>
                     </Container>
                     <Container class="javax.swing.JPanel" name="panel_PRI">
@@ -1193,12 +1243,19 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="boxTipoSimulacionPRI" min="-2" pref="188" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="boxTipoSimulacionPRI" min="-2" pref="41" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jScrollPane12" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
                                       <Component id="jScrollPane11" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
@@ -1270,6 +1327,24 @@
                             <Property name="text" type="java.lang.String" value="Mapa Memoria"/>
                           </Properties>
                         </Component>
+                        <Component class="javax.swing.JComboBox" name="boxTipoSimulacionPRI">
+                          <Properties>
+                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                              <StringArray count="4">
+                                <StringItem index="0" value="Item 1"/>
+                                <StringItem index="1" value="Item 2"/>
+                                <StringItem index="2" value="Item 3"/>
+                                <StringItem index="3" value="Item 4"/>
+                              </StringArray>
+                            </Property>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boxTipoSimulacionPRIActionPerformed"/>
+                          </Events>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                          </AuxValues>
+                        </Component>
                       </SubComponents>
                     </Container>
                     <Container class="javax.swing.JPanel" name="panel_RR">
@@ -1282,17 +1357,24 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
                                   <Component id="jScrollPane14" min="-2" pref="319" max="-2" attributes="0"/>
                                   <EmptySpace pref="123" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
+                                  <Component id="boxTipoSimulacionRR" min="-2" pref="188" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                  <Component id="boxTipoSimulacionRR" min="-2" pref="41" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                                   <Component id="jScrollPane14" min="-2" pref="196" max="-2" attributes="0"/>
                                   <EmptySpace pref="167" max="32767" attributes="0"/>
                               </Group>
@@ -1315,6 +1397,24 @@
                             </Component>
                           </SubComponents>
                         </Container>
+                        <Component class="javax.swing.JComboBox" name="boxTipoSimulacionRR">
+                          <Properties>
+                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                              <StringArray count="4">
+                                <StringItem index="0" value="Item 1"/>
+                                <StringItem index="1" value="Item 2"/>
+                                <StringItem index="2" value="Item 3"/>
+                                <StringItem index="3" value="Item 4"/>
+                              </StringArray>
+                            </Property>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boxTipoSimulacionRRActionPerformed"/>
+                          </Events>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                          </AuxValues>
+                        </Component>
                       </SubComponents>
                     </Container>
                   </SubComponents>

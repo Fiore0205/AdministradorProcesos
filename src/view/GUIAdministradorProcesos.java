@@ -5,6 +5,7 @@
 package view;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -19,9 +20,10 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
      */
     public GUIAdministradorProcesos() {
         initComponents();
+        llenarComboBoxs();
     }
 
-     public JButton getBtnAgregarMaquina() {
+    public JButton getBtnAgregarMaquina() {
         return btnAgregarMaquina;
     }
 
@@ -244,7 +246,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     public void setTxtUTiempoProceso(String txtUTiempoProceso) {
         this.txtUTiempoProceso.setText(txtUTiempoProceso);
     }
-    
+
     public JButton getBtnCM() {
         return btnCM;
     }
@@ -252,7 +254,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     public void setBtnCM(JButton btnCM) {
         this.btnCM = btnCM;
     }
-    
+
     public JButton getBtnODL() {
         return btnODL;
     }
@@ -276,7 +278,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     public JButton getBtnIniciar() {
         return btnIniciar;
     }
-    
+
     public JButton getBtnRR() {
         return btnRR;
     }
@@ -436,10 +438,55 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     public void setTxtAreaListaTablaEstadosRR(String txtAreaListaTablaEstadosRR) {
         this.txtAreaListaTablaEstadosRR.setText(txtAreaListaTablaEstadosRR);
     }
+
+    public JComboBox<String> getBoxTipoSimulacionODL() {
+        return boxTipoSimulacionODL;
+    }
+
+    public void setBoxTipoSimulacionODL(JComboBox<String> boxTipoSimulacionODL) {
+        this.boxTipoSimulacionODL = boxTipoSimulacionODL;
+    }
+
+    public JComboBox<String> getBoxTipoSimulacionPRI() {
+        return boxTipoSimulacionPRI;
+    }
+
+    public void setBoxTipoSimulacionPRI(JComboBox<String> boxTipoSimulacionPRI) {
+        this.boxTipoSimulacionPRI = boxTipoSimulacionPRI;
+    }
+
+    public JComboBox<String> getBoxTipoSimulacionRR() {
+        return boxTipoSimulacionRR;
+    }
+
+    public void setBoxTipoSimulacionRR(JComboBox<String> boxTipoSimulacionRR) {
+        this.boxTipoSimulacionRR = boxTipoSimulacionRR;
+    }
+
+    public JComboBox<String> getBoxTipoSimulacionTMC() {
+        return boxTipoSimulacionTMC;
+    }
+
+    public void setBoxTipoSimulacionTMC(JComboBox<String> boxTipoSimulacionTMC) {
+        this.boxTipoSimulacionTMC = boxTipoSimulacionTMC;
+    }
     
     
-     
-    
+
+    public void llenarComboBoxs() {
+        boxTipoSimulacionODL.addItem("Simulación Estática");
+        boxTipoSimulacionODL.addItem("Simulación Dinámica");
+        
+        boxTipoSimulacionTMC.addItem("Simulación Estática");
+        boxTipoSimulacionTMC.addItem("Simulación Dinámica");
+        
+        boxTipoSimulacionRR.addItem("Simulación Estática");
+        boxTipoSimulacionRR.addItem("Simulación Dinámica");
+        
+        boxTipoSimulacionPRI.addItem("Simulación Estática");
+        boxTipoSimulacionPRI.addItem("Simulación Dinámica");
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -516,6 +563,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jScrollPane10 = new javax.swing.JScrollPane();
         txtAreaMemoriaMaquinasTMC = new javax.swing.JTextArea();
         jLabel19 = new javax.swing.JLabel();
+        boxTipoSimulacionTMC = new javax.swing.JComboBox<>();
         panel_ODL = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         txtAreaListaTablaEstadosODL = new javax.swing.JTextArea();
@@ -524,6 +572,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         txtAreaMemoriaMaquinasODL = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
+        boxTipoSimulacionODL = new javax.swing.JComboBox<>();
         panel_PRI = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
         txtAreaListaTablaEstadosPRI = new javax.swing.JTextArea();
@@ -532,9 +581,11 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jScrollPane13 = new javax.swing.JScrollPane();
         txtAreaMemoriaMaquinasPRI = new javax.swing.JTextArea();
         jLabel21 = new javax.swing.JLabel();
+        boxTipoSimulacionPRI = new javax.swing.JComboBox<>();
         panel_RR = new javax.swing.JPanel();
         jScrollPane14 = new javax.swing.JScrollPane();
         txtAreaListaTablaEstadosRR = new javax.swing.JTextArea();
+        boxTipoSimulacionRR = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1056,6 +1107,13 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Mapa Memoria");
 
+        boxTipoSimulacionTMC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxTipoSimulacionTMC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxTipoSimulacionTMCActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_TMCLayout = new javax.swing.GroupLayout(panel_TMC);
         panel_TMC.setLayout(panel_TMCLayout);
         panel_TMCLayout.setHorizontalGroup(
@@ -1075,11 +1133,17 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(27, 27, 27))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_TMCLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(boxTipoSimulacionTMC, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(163, 163, 163))
         );
         panel_TMCLayout.setVerticalGroup(
             panel_TMCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_TMCLayout.createSequentialGroup()
-                .addGap(93, 93, 93)
+                .addGap(18, 18, 18)
+                .addComponent(boxTipoSimulacionTMC, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addGroup(panel_TMCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1112,6 +1176,13 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Mapa Memoria");
 
+        boxTipoSimulacionODL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxTipoSimulacionODL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxTipoSimulacionODLActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_ODLLayout = new javax.swing.GroupLayout(panel_ODL);
         panel_ODL.setLayout(panel_ODLLayout);
         panel_ODLLayout.setHorizontalGroup(
@@ -1131,11 +1202,17 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(27, 27, 27))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_ODLLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(boxTipoSimulacionODL, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(163, 163, 163))
         );
         panel_ODLLayout.setVerticalGroup(
             panel_ODLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_ODLLayout.createSequentialGroup()
-                .addGap(93, 93, 93)
+                .addGap(26, 26, 26)
+                .addComponent(boxTipoSimulacionODL, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(panel_ODLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1167,6 +1244,13 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Mapa Memoria");
 
+        boxTipoSimulacionPRI.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxTipoSimulacionPRI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxTipoSimulacionPRIActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_PRILayout = new javax.swing.GroupLayout(panel_PRI);
         panel_PRI.setLayout(panel_PRILayout);
         panel_PRILayout.setHorizontalGroup(
@@ -1186,11 +1270,17 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                                 .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(27, 27, 27))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_PRILayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(boxTipoSimulacionPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(169, 169, 169))
         );
         panel_PRILayout.setVerticalGroup(
             panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_PRILayout.createSequentialGroup()
-                .addGap(93, 93, 93)
+                .addGap(22, 22, 22)
+                .addComponent(boxTipoSimulacionPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addGroup(panel_PRILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1207,6 +1297,13 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         txtAreaListaTablaEstadosRR.setRows(5);
         jScrollPane14.setViewportView(txtAreaListaTablaEstadosRR);
 
+        boxTipoSimulacionRR.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxTipoSimulacionRR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxTipoSimulacionRRActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_RRLayout = new javax.swing.GroupLayout(panel_RR);
         panel_RR.setLayout(panel_RRLayout);
         panel_RRLayout.setHorizontalGroup(
@@ -1215,11 +1312,17 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                 .addGap(118, 118, 118)
                 .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(123, Short.MAX_VALUE))
+            .addGroup(panel_RRLayout.createSequentialGroup()
+                .addGap(177, 177, 177)
+                .addComponent(boxTipoSimulacionRR, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_RRLayout.setVerticalGroup(
             panel_RRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_RRLayout.createSequentialGroup()
-                .addGap(117, 117, 117)
+                .addGap(14, 14, 14)
+                .addComponent(boxTipoSimulacionRR, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
                 .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(167, Short.MAX_VALUE))
         );
@@ -1330,9 +1433,28 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnODLActionPerformed
 
+    private void boxTipoSimulacionRRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipoSimulacionRRActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxTipoSimulacionRRActionPerformed
+
+    private void boxTipoSimulacionTMCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipoSimulacionTMCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxTipoSimulacionTMCActionPerformed
+
+    private void boxTipoSimulacionODLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipoSimulacionODLActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxTipoSimulacionODLActionPerformed
+
+    private void boxTipoSimulacionPRIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipoSimulacionPRIActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxTipoSimulacionPRIActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> boxTipoSimulacionODL;
+    private javax.swing.JComboBox<String> boxTipoSimulacionPRI;
+    private javax.swing.JComboBox<String> boxTipoSimulacionRR;
+    private javax.swing.JComboBox<String> boxTipoSimulacionTMC;
     private javax.swing.JButton btnAgregarMaquina;
     private javax.swing.JButton btnAgregarProceso;
     private javax.swing.JButton btnAsignarRecursosMaquina;
