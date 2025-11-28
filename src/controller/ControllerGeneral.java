@@ -73,6 +73,9 @@ public class ControllerGeneral implements ActionListener {
         guiAdmin.getBtnIniciar().addActionListener(this);
         guiAdmin.getBtnParar().addActionListener(this);
 
+        // ---------- Round Robin --------
+        guiAdmin.getBtnRR().addActionListener(this);
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -139,10 +142,21 @@ public class ControllerGeneral implements ActionListener {
             cambioDePanel(1);
         }
 
+        // ---------- ROUND ROBIN ----------
+        if (e.getSource() == guiAdmin.getBtnRR()) {
+            algoritmoPlActual = 3;
+            cambioDePanel(3);
+        }
+
         // ---------- BOTON INICIAR ----------
         if (e.getSource() == guiAdmin.getBtnIniciar()) {
             cambioDePanel(algoritmoPlActual);
             iniciarTimer(algoritmoPlActual);
+        }
+
+        // ---------- BOTON PARAR ----------
+        if (e.getSource() == guiAdmin.getBtnParar()) {
+            detenerTimer();
         }
 
     }
@@ -340,45 +354,70 @@ public class ControllerGeneral implements ActionListener {
 
     public void iniciarTimer(int tipoAlgoritmo) {
 
-        // Evitar que se ejecute dos veces
+        // Si ya está corriendo, no hacer nada
         if (ejecutando) {
             JOptionPane.showMessageDialog(guiAdmin, "La simulación ya está en curso.");
             return;
         }
 
-        ejecutando = true;
-        tiempoSimulacion = 0;
+        ejecutando = true; // ahora está en ejecución
 
-        ordenarTipoAlgoritmo(tipoAlgoritmo);
+        // SOLO si es la primera vez que se inicia
+        if (timer == null) {
+            tiempoSimulacion = 0;
+            ordenarTipoAlgoritmo(tipoAlgoritmo);
 
-        timer = new Timer(1000, new ActionListener() {   // 1 segundo
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            timer = new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
-                boolean terminado = administradorP.ejecutarPaso();
-                listarTipoDeAlgoritmo(tipoAlgoritmo);
-                tiempoSimulacion++;
+                    boolean terminado;
 
-                // Si terminó, detener timer
-                if (terminado) {
-                    timer.stop();
-                    ejecutando = false;
-                    JOptionPane.showMessageDialog(guiAdmin,
-                            "La simulación ha finalizado.");
+                    if (tipoAlgoritmo == 3) {
+                        terminado = administradorP.ejecutarPasoRR();
+                    } else {
+                        terminado = administradorP.ejecutarPaso();
+                    }
+
+                    listarTipoDeAlgoritmo(tipoAlgoritmo);
+                    tiempoSimulacion++;
+
+                    if (terminado) {
+                        timer.stop();
+                        ejecutando = false;
+                        JOptionPane.showMessageDialog(guiAdmin, "La simulación ha finalizado.");
+                    }
                 }
-            }
-        });
+            });
+        }
 
-        timer.start(); // INICIA
+        // Aquí se reanuda sin reiniciar nada
+        timer.start();
     }
 
     public void ordenarTipoAlgoritmo(int tipoAlgoritmo) {
-        // 1 = TMC  2 = PRI
+        // 1 = TMC  2 = PRI  3 = RR
         if (tipoAlgoritmo == 1) {
             administradorP.ordenarTiempoMasCorto();
 
         } else if (tipoAlgoritmo == 2) {
             administradorP.ordenarPrioridad();
+        } else if (tipoAlgoritmo == 3) {
+            String q = JOptionPane.showInputDialog(guiAdmin,
+                    "Digite el quantum:", "Quantum RR",
+                    JOptionPane.QUESTION_MESSAGE);
+
+            if (q == null || q.trim().isEmpty()) {
+                return;
+            }
+
+            try {
+                int quantum = Integer.parseInt(q.trim());
+                administradorP.setQuantum(quantum);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(guiAdmin, "Quantum inválido");
+                return;
+            }
         }
     }
 
@@ -407,21 +446,35 @@ public class ControllerGeneral implements ActionListener {
             guiAdmin.setTxtAreaListarRecursosMaquinasPRI(administradorP.listarRecursosTodasLasMaquinas());
 
             guiAdmin.setTxtAreaMemoriaMaquinasPRI(administradorP.listarMapaMemoria());
+            
+        } else if (tipoAlgoritmo == 3) {
+            guiAdmin.setTxtAreaListaTablaEstadosRR(administradorP.listarTablaDeEstados());
         }
+
     }
 
     public void cambioDePanel(int tipoAlgoritmo) {
         guiAdmin.getPanel_parent().removeAll();
-        // 0 = ODL  1 = TMC  2 = PRI
+        // 0 = ODL  1 = TMC  2 = PRI  3 = RR
         if (tipoAlgoritmo == 0) {
             guiAdmin.getPanel_parent().add(guiAdmin.getPanel_ODL());
         } else if (tipoAlgoritmo == 1) {
             guiAdmin.getPanel_parent().add(guiAdmin.getPanel_TMC());
         } else if (tipoAlgoritmo == 2) {
             guiAdmin.getPanel_parent().add(guiAdmin.getPanel_PRI());
+        }else if (tipoAlgoritmo == 3) {
+            guiAdmin.getPanel_parent().add(guiAdmin.getPanel_RR());
         }
         guiAdmin.getPanel_parent().repaint();
         guiAdmin.getPanel_parent().revalidate();
+    }
+
+    public void detenerTimer() {
+        if (timer != null && ejecutando) {
+            timer.stop();          // Pausa la simulación
+            ejecutando = false;    // Indica que YA NO está ejecutando
+            JOptionPane.showMessageDialog(guiAdmin, "La simulación se ha detenido.");
+        }
     }
 
 }

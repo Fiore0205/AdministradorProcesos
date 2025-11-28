@@ -420,6 +420,24 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     public void setPanel_PRI(JPanel panel_PRI) {
         this.panel_PRI = panel_PRI;
     }
+
+    public JPanel getPanel_RR() {
+        return panel_RR;
+    }
+
+    public void setPanel_RR(JPanel panel_RR) {
+        this.panel_RR = panel_RR;
+    }
+
+    public String getTxtAreaListaTablaEstadosRR() {
+        return txtAreaListaTablaEstadosRR.getText();
+    }
+
+    public void setTxtAreaListaTablaEstadosRR(String txtAreaListaTablaEstadosRR) {
+        this.txtAreaListaTablaEstadosRR.setText(txtAreaListaTablaEstadosRR);
+    }
+    
+    
      
     
     @SuppressWarnings("unchecked")
@@ -514,6 +532,9 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jScrollPane13 = new javax.swing.JScrollPane();
         txtAreaMemoriaMaquinasPRI = new javax.swing.JTextArea();
         jLabel21 = new javax.swing.JLabel();
+        panel_RR = new javax.swing.JPanel();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        txtAreaListaTablaEstadosRR = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1182,6 +1203,29 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
 
         panel_parent.add(panel_PRI, "card4");
 
+        txtAreaListaTablaEstadosRR.setColumns(20);
+        txtAreaListaTablaEstadosRR.setRows(5);
+        jScrollPane14.setViewportView(txtAreaListaTablaEstadosRR);
+
+        javax.swing.GroupLayout panel_RRLayout = new javax.swing.GroupLayout(panel_RR);
+        panel_RR.setLayout(panel_RRLayout);
+        panel_RRLayout.setHorizontalGroup(
+            panel_RRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_RRLayout.createSequentialGroup()
+                .addGap(118, 118, 118)
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(123, Short.MAX_VALUE))
+        );
+        panel_RRLayout.setVerticalGroup(
+            panel_RRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_RRLayout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(167, Short.MAX_VALUE))
+        );
+
+        panel_parent.add(panel_RR, "card5");
+
         jPanel4.add(panel_parent);
         panel_parent.setBounds(280, 0, 560, 480);
 
@@ -1338,6 +1382,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1349,6 +1394,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel panel_ODL;
     private javax.swing.JPanel panel_PRI;
+    private javax.swing.JPanel panel_RR;
     private javax.swing.JPanel panel_TMC;
     private javax.swing.JPanel panel_botones_algoritmos;
     private javax.swing.JPanel panel_parent;
@@ -1358,6 +1404,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JTextArea txtAreaListaRecursosMaquina;
     private javax.swing.JTextArea txtAreaListaTablaEstadosODL;
     private javax.swing.JTextArea txtAreaListaTablaEstadosPRI;
+    private javax.swing.JTextArea txtAreaListaTablaEstadosRR;
     private javax.swing.JTextArea txtAreaListaTablaEstadosTMC;
     private javax.swing.JTextArea txtAreaListarRecursosMaquinasODL;
     private javax.swing.JTextArea txtAreaListarRecursosMaquinasPRI;

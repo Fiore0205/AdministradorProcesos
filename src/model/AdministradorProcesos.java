@@ -17,6 +17,8 @@ public class AdministradorProcesos {
     private ListaMaquinas listaMaquinas;
     private Maquina maquina;
     private int tiempoActual;
+    private int quantum;
+    private int indiceRR;  // índice actual de la cola
 
     public AdministradorProcesos() {
         listaProcesos = new ListaProcesos();
@@ -39,6 +41,11 @@ public class AdministradorProcesos {
 
     public void setProceso(Proceso proceso) {
         this.proceso = proceso;
+    }
+
+    public void setQuantum(int q) {
+        this.quantum = q;
+        this.indiceRR = 0;  // reset cola circular
     }
 
     //------- METODOS DE PROCESOS BOTONES --------------------
@@ -146,7 +153,6 @@ public class AdministradorProcesos {
     // ============================================================
 //    Ordenar
 // ============================================================
-
     public void ordenarPrioridad() {
         listaProcesos.ordenarPrioridad();
     }
@@ -454,6 +460,60 @@ public class AdministradorProcesos {
 
         // Remover referencia
         p.setMaquinaAsignada(null);
+    }
+
+    public boolean ejecutarPasoRR() {
+
+        ArrayList<Proceso> lista = listaProcesos.getLista();
+
+        // 1. Verificar si todos están terminados
+        boolean todosTerminados = true;
+        for (Proceso p : lista) {
+            if (p.getEstado() != 4) {
+                todosTerminados = false;
+                break;
+            }
+        }
+        if (todosTerminados) {
+            return true; // finalizó RR
+        }
+
+        // 2. Asegurar cola circular
+        if (indiceRR >= lista.size()) {
+            indiceRR = 0;
+        }
+
+        Proceso p = lista.get(indiceRR);
+
+        // 3. Si está terminado → saltar al siguiente
+        if (p.getEstado() == 4) {
+            indiceRR++;
+            return false;
+        }
+
+        // 4. RR puro: ejecutar el proceso SÍ O SÍ (no máquinas)
+        p.setEstado(1); // ACTIVO
+
+        int tiempo = p.getUnidadesTiempoRestante();
+        int resta = Math.min(quantum, tiempo);
+
+        // Descontar quantum al proceso
+        p.setUnidadesTiempoRestante(tiempo - resta);
+
+        // 5. Verificar si terminó
+        if (p.getUnidadesTiempoRestante() == 0) {
+            p.setEstado(4); // TERMINADO
+        } else {
+            p.setEstado(2); // ESPERA
+        }
+
+        // 6. Avanzar al siguiente proceso
+        indiceRR++;
+
+        // 7. Avanzar tiempo global
+        tiempoActual++;
+
+        return false; // todavía no termina
     }
 
 }

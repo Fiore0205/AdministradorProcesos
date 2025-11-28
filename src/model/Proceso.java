@@ -161,6 +161,10 @@ public class Proceso {
         this.estado = estado;
     }
 
+    public void setUnidadesTiempoRestante(int unidadesTiempoRestante) {
+        this.unidadesTiempoRestante = unidadesTiempoRestante;
+    }
+    
     public String detalleProceso() {
         String sal = "";
         sal += nombre + ": ";
