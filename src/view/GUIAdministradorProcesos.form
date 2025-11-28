@@ -790,7 +790,6 @@
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="btnCM" alignment="1" min="-2" pref="141" max="-2" attributes="0"/>
                                           <Component id="btnPRI" alignment="1" min="-2" pref="141" max="-2" attributes="0"/>
                                           <Component id="btnRR" alignment="1" min="-2" pref="141" max="-2" attributes="0"/>
                                           <Component id="btnODL" alignment="1" min="-2" pref="141" max="-2" attributes="0"/>
@@ -819,9 +818,7 @@
                               <Component id="btnRR" min="-2" pref="41" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnPRI" min="-2" pref="41" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnCM" min="-2" pref="41" max="-2" attributes="0"/>
-                              <EmptySpace pref="94" max="32767" attributes="0"/>
+                              <EmptySpace pref="153" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btnIniciar" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnParar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -885,14 +882,6 @@
                           <Color blue="ff" green="cc" red="cc" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Prioridad"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="btnCM">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="cc" red="cc" type="rgb"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Colas M&#xfa;ltiples"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnIniciar">

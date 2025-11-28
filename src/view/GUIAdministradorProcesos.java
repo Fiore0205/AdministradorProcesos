@@ -246,14 +246,6 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         this.txtUTiempoProceso.setText(txtUTiempoProceso);
     }
 
-    public JButton getBtnCM() {
-        return btnCM;
-    }
-
-    public void setBtnCM(JButton btnCM) {
-        this.btnCM = btnCM;
-    }
-
     public JButton getBtnODL() {
         return btnODL;
     }
@@ -534,7 +526,6 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         btnODL = new javax.swing.JButton();
         btnRR = new javax.swing.JButton();
         btnPRI = new javax.swing.JButton();
-        btnCM = new javax.swing.JButton();
         btnIniciar = new javax.swing.JButton();
         btnParar = new javax.swing.JButton();
         panel_parent = new javax.swing.JPanel();
@@ -1018,9 +1009,6 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         btnPRI.setBackground(new java.awt.Color(204, 204, 255));
         btnPRI.setText("Prioridad");
 
-        btnCM.setBackground(new java.awt.Color(204, 204, 255));
-        btnCM.setText("Colas Múltiples");
-
         btnIniciar.setText("Iniciar");
 
         btnParar.setText("Parar");
@@ -1034,7 +1022,6 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                     .addGroup(panel_botones_algoritmosLayout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addGroup(panel_botones_algoritmosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnCM, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnRR, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnODL, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1057,9 +1044,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
                 .addComponent(btnRR, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnPRI, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCM, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                 .addGroup(panel_botones_algoritmosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIniciar)
                     .addComponent(btnParar))
@@ -1443,7 +1428,6 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarProceso;
     private javax.swing.JButton btnAsignarRecursosMaquina;
     private javax.swing.JButton btnAsignarRecursosProceso;
-    private javax.swing.JButton btnCM;
     private javax.swing.JButton btnConsultarMaquina;
     private javax.swing.JButton btnConsultarProceso;
     private javax.swing.JButton btnCrearMaquina;

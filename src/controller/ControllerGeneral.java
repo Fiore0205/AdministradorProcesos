@@ -30,6 +30,7 @@ public class ControllerGeneral implements ActionListener {
     private boolean ejecutando;
     private int algoritmoPlActual;
     private boolean esDinamico;
+    private int tamanioLista;
 
     public ControllerGeneral() {
         administradorP = new AdministradorProcesos();
@@ -136,21 +137,19 @@ public class ControllerGeneral implements ActionListener {
         // ---------- PRIORIDAD ----------
         if (e.getSource() == guiAdmin.getBtnPRI()) {
             algoritmoPlActual = 2;
-            esDinamico = guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString().equals("Simulación Dinámica");
+            //esDinamico = guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString().equals("Simulación Dinámica");
             cambioDePanel(2);
         }
 
         // ---------- TMC ----------
         if (e.getSource() == guiAdmin.getBtnTMC()) {
             algoritmoPlActual = 1;
-            esDinamico = guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString().equals("Simulación Dinámica");
             cambioDePanel(1);
         }
 
         // ---------- ROUND ROBIN ----------
         if (e.getSource() == guiAdmin.getBtnRR()) {
             algoritmoPlActual = 3;
-            esDinamico = guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString().equals("Simulación Dinámica");
             cambioDePanel(3);
         }
 
@@ -260,30 +259,6 @@ public class ControllerGeneral implements ActionListener {
 
     public void agregarProcesoALista() {
         administradorP.agregarProceso();
-
-        // --- Si es dinámica, insertar según algoritmo ---
-        if (esDinamico && ejecutando) {
-
-            switch (algoritmoPlActual) {
-                case 0: // ODL
-                    break; // FIFO no cambia
-                case 1: // TMC
-                    administradorP.ordenarTiempoMasCorto();
-                    break;
-                case 2: // Prioridad
-                    administradorP.ordenarPrioridad();
-                    break;
-                case 3: // Round Robin
-                    administradorP.insertarProcesoRR(
-                            Integer.parseInt(guiAdmin.getTxtNProceso())
-                    );
-                    break;
-            }
-
-            // 🔥 REFRESCAR TABLA Y MEMORIA EN TIEMPO REAL
-            listarTipoDeAlgoritmo(algoritmoPlActual);
-        }
-
         limpiarCampos();
         listarProcesos();
     }
@@ -401,6 +376,7 @@ public class ControllerGeneral implements ActionListener {
                 public void actionPerformed(ActionEvent e) {
 
                     boolean terminado;
+                    ordenarTipoAlgoritmo(tipoAlgoritmo);
 
                     if (tipoAlgoritmo == 3) {
                         terminado = administradorP.ejecutarPasoRR();
@@ -507,16 +483,16 @@ public class ControllerGeneral implements ActionListener {
     }
 
     public void inicializarAlgoritmoEstatico(int tipoAlgoritmo) {
-        if (tipoAlgoritmo == 0 && guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString().equals("Simulación Estática")) {
+        if (tipoAlgoritmo == 0 && guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString().equals("Simulación Dinámica")) {
             cambioDePanel(tipoAlgoritmo);
             iniciarTimer(tipoAlgoritmo);
-        } else if (tipoAlgoritmo == 1 && guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString().equals("Simulación Estática")) {
+        } else if (tipoAlgoritmo == 1 && guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString().equals("Simulación Dinámica")) {
             cambioDePanel(tipoAlgoritmo);
             iniciarTimer(tipoAlgoritmo);
-        } else if (tipoAlgoritmo == 2 && guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString().equals("Simulación Estática")) {
+        } else if (tipoAlgoritmo == 2 && guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString().equals("Simulación Dinámica")) {
             cambioDePanel(tipoAlgoritmo);
             iniciarTimer(tipoAlgoritmo);
-        } else if (tipoAlgoritmo == 3 && guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString().equals("Simulación Estática")) {
+        } else if (tipoAlgoritmo == 3 && guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString().equals("Simulación Dinámica")) {
             cambioDePanel(tipoAlgoritmo);
             iniciarTimer(tipoAlgoritmo);
         }
