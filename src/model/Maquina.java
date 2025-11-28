@@ -105,6 +105,10 @@ public class Maquina {
         return listaRecursoMaquina;
     }
 
+    public ArrayList<String> getMemoriaMapa() {
+        return memoriaMapa;
+    }
+
     // --- MÉTODOS MEMORIA ---
     public void asignarMemoria(int cantidad) {
         unidadesMemoriaDisponible -= cantidad;

@@ -119,12 +119,57 @@ public class ListaMaquinas {
     }
 
     public String mostrarMapaMemoriaTodas() {
-        StringBuilder sb = new StringBuilder();
 
-        for (Maquina m : listaMaquinas) {
-            sb.append(m.mostrarMapaMemoria()).append("\n");
-        }
-        return sb.toString();
+    StringBuilder sb = new StringBuilder();
+
+    if (listaMaquinas.isEmpty()) {
+        return "No hay máquinas registradas.\n";
     }
+
+    // ================================
+    // 1. OBTENER LA MAYOR MEMORIA
+    // ================================
+    int maxMemoria = 0;
+
+    for (Maquina m : listaMaquinas) {
+        if (m.getUnidadesMemoriaMaquina() > maxMemoria) {
+            maxMemoria = m.getUnidadesMemoriaMaquina();
+        }
+    }
+
+    // ================================
+    // 2. ENCABEZADO DEL 1 AL MAX
+    // ================================
+    sb.append("     "); // espacio antes del encabezado
+
+    for (int i = 1; i <= maxMemoria; i++) {
+        sb.append(String.format("%-3s", i));
+    }
+    sb.append("\n");
+
+    // ================================
+    // 3. LISTAR CADA MÁQUINA CON SU MAPA
+    // ================================
+    for (Maquina m : listaMaquinas) {
+
+        sb.append("M").append(m.getNMaquina()).append("   ");
+
+        ArrayList<String> mapa = m.getMemoriaMapa();
+
+        for (int i = 0; i < maxMemoria; i++) {
+
+            if (i < mapa.size()) {
+                sb.append(String.format("%-3s", mapa.get(i)));
+            } else {
+                sb.append("L  "); // si no tiene celda, se considera libre
+            }
+        }
+
+        sb.append("\n");
+    }
+
+    return sb.toString();
+}
+
 
 }
