@@ -516,16 +516,11 @@ public class AdministradorProcesos {
         return false; // todavía no termina
     }
 
-    public void agregarProcesoDinamico(Proceso p, int algoritmo) {
-
-        listaProcesos.getLista().add(p); // al final (cola dinámica)
-
-        if (algoritmo == 1) {     // SJF
-            listaProcesos.ordenarTiempo();
-        } else if (algoritmo == 2) { // Prioridad
-            listaProcesos.ordenarPrioridad();
+    public void insertarProcesoRR(int id) {
+        Proceso p = listaProcesos.buscarProceso(id);
+        if (p != null) {
+            listaProcesos.getLista().add(p); // RR usa la lista general
         }
-        // FCFS y RR → se dejan en orden de llegada
     }
 
 }

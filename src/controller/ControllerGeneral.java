@@ -29,6 +29,7 @@ public class ControllerGeneral implements ActionListener {
     private int tiempoSimulacion;
     private boolean ejecutando;
     private int algoritmoPlActual;
+    private boolean esDinamico;
 
     public ControllerGeneral() {
         administradorP = new AdministradorProcesos();
@@ -39,6 +40,7 @@ public class ControllerGeneral implements ActionListener {
         ejecutando = false;
         tiempoSimulacion = 0;
         algoritmoPlActual = 0;
+        esDinamico = false;
         initEvents();
         guiAdmin.setVisible(true);
     }
@@ -127,24 +129,28 @@ public class ControllerGeneral implements ActionListener {
         // ---------- ORDEN DE LLEGADA ----------
         if (e.getSource() == guiAdmin.getBtnODL()) {
             algoritmoPlActual = 0;
+            esDinamico = guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString().equals("Simulación Dinámica");
             cambioDePanel(0);
         }
 
         // ---------- PRIORIDAD ----------
         if (e.getSource() == guiAdmin.getBtnPRI()) {
             algoritmoPlActual = 2;
+            esDinamico = guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString().equals("Simulación Dinámica");
             cambioDePanel(2);
         }
 
         // ---------- TMC ----------
         if (e.getSource() == guiAdmin.getBtnTMC()) {
             algoritmoPlActual = 1;
+            esDinamico = guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString().equals("Simulación Dinámica");
             cambioDePanel(1);
         }
 
         // ---------- ROUND ROBIN ----------
         if (e.getSource() == guiAdmin.getBtnRR()) {
             algoritmoPlActual = 3;
+            esDinamico = guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString().equals("Simulación Dinámica");
             cambioDePanel(3);
         }
 
@@ -253,44 +259,33 @@ public class ControllerGeneral implements ActionListener {
     }
 
     public void agregarProcesoALista() {
+        administradorP.agregarProceso();
 
-        // Crear el proceso con los campos del GUI
-        crearProceso();  // ya tienes este método y deja "proceso" listo
+        // --- Si es dinámica, insertar según algoritmo ---
+        if (esDinamico && ejecutando) {
 
-        String modo = "";
-        if (algoritmoPlActual == 0) {
-            modo = guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString();
-        } else if (algoritmoPlActual == 1) {
-            modo = guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString();
-        } else if (algoritmoPlActual == 2) {
-            modo = guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString();
-        } else if (algoritmoPlActual == 3) {
-            modo = guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString();
+            switch (algoritmoPlActual) {
+                case 0: // ODL
+                    break; // FIFO no cambia
+                case 1: // TMC
+                    administradorP.ordenarTiempoMasCorto();
+                    break;
+                case 2: // Prioridad
+                    administradorP.ordenarPrioridad();
+                    break;
+                case 3: // Round Robin
+                    administradorP.insertarProcesoRR(
+                            Integer.parseInt(guiAdmin.getTxtNProceso())
+                    );
+                    break;
+            }
+
+            // 🔥 REFRESCAR TABLA Y MEMORIA EN TIEMPO REAL
+            listarTipoDeAlgoritmo(algoritmoPlActual);
         }
 
-        // ------------------------------
-        //     MODO ESTÁTICO
-        // ------------------------------
-        if (modo.equals("Simulación Estática")) {
-            administradorP.agregarProceso();
-            limpiarCampos();
-            listarProcesos();
-            return;
-        }
-
-        // ------------------------------
-        //     MODO DINÁMICO (HOT)
-        // ------------------------------
-        if (modo.equals("Simulación Dinámica")) {
-
-            administradorP.agregarProcesoDinamico(administradorP.getProceso(), algoritmoPlActual);
-
-            JOptionPane.showMessageDialog(guiAdmin,
-                    "Proceso insertado dinámicamente en la cola.");
-
-            limpiarCampos();
-            listarProcesos();
-        }
+        limpiarCampos();
+        listarProcesos();
     }
 
     // --- METODOS DE TXT AREAS DE PROCESOS ---

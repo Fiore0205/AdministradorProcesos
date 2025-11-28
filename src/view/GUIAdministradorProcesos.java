@@ -20,7 +20,6 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
      */
     public GUIAdministradorProcesos() {
         initComponents();
-        llenarComboBoxs();
     }
 
     public JButton getBtnAgregarMaquina() {
@@ -469,22 +468,6 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
 
     public void setBoxTipoSimulacionTMC(JComboBox<String> boxTipoSimulacionTMC) {
         this.boxTipoSimulacionTMC = boxTipoSimulacionTMC;
-    }
-    
-    
-
-    public void llenarComboBoxs() {
-        boxTipoSimulacionODL.addItem("Simulación Estática");
-        boxTipoSimulacionODL.addItem("Simulación Dinámica");
-        
-        boxTipoSimulacionTMC.addItem("Simulación Estática");
-        boxTipoSimulacionTMC.addItem("Simulación Dinámica");
-        
-        boxTipoSimulacionRR.addItem("Simulación Estática");
-        boxTipoSimulacionRR.addItem("Simulación Dinámica");
-        
-        boxTipoSimulacionPRI.addItem("Simulación Estática");
-        boxTipoSimulacionPRI.addItem("Simulación Dinámica");
     }
 
     @SuppressWarnings("unchecked")
@@ -1107,7 +1090,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Mapa Memoria");
 
-        boxTipoSimulacionTMC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxTipoSimulacionTMC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simulación Estática", "Simulación Dinámica" }));
         boxTipoSimulacionTMC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxTipoSimulacionTMCActionPerformed(evt);
@@ -1176,7 +1159,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Mapa Memoria");
 
-        boxTipoSimulacionODL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxTipoSimulacionODL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simulación Estática", "Simulación Dinámica" }));
         boxTipoSimulacionODL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxTipoSimulacionODLActionPerformed(evt);
@@ -1244,7 +1227,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Mapa Memoria");
 
-        boxTipoSimulacionPRI.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxTipoSimulacionPRI.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simulación Estática", "Simulación Dinámica" }));
         boxTipoSimulacionPRI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxTipoSimulacionPRIActionPerformed(evt);
@@ -1297,7 +1280,7 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         txtAreaListaTablaEstadosRR.setRows(5);
         jScrollPane14.setViewportView(txtAreaListaTablaEstadosRR);
 
-        boxTipoSimulacionRR.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxTipoSimulacionRR.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simulación Estática", "Simulación Dinámica" }));
         boxTipoSimulacionRR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxTipoSimulacionRRActionPerformed(evt);
@@ -1309,12 +1292,13 @@ public class GUIAdministradorProcesos extends javax.swing.JFrame {
         panel_RRLayout.setHorizontalGroup(
             panel_RRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_RRLayout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(123, Short.MAX_VALUE))
-            .addGroup(panel_RRLayout.createSequentialGroup()
-                .addGap(177, 177, 177)
-                .addComponent(boxTipoSimulacionRR, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panel_RRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_RRLayout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_RRLayout.createSequentialGroup()
+                        .addGap(177, 177, 177)
+                        .addComponent(boxTipoSimulacionRR, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_RRLayout.setVerticalGroup(

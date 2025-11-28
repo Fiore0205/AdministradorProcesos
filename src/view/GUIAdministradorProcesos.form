@@ -1043,11 +1043,9 @@
                         <Component class="javax.swing.JComboBox" name="boxTipoSimulacionTMC">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="4">
-                                <StringItem index="0" value="Item 1"/>
-                                <StringItem index="1" value="Item 2"/>
-                                <StringItem index="2" value="Item 3"/>
-                                <StringItem index="3" value="Item 4"/>
+                              <StringArray count="2">
+                                <StringItem index="0" value="Simulaci&#xf3;n Est&#xe1;tica"/>
+                                <StringItem index="1" value="Simulaci&#xf3;n Din&#xe1;mica"/>
                               </StringArray>
                             </Property>
                           </Properties>
@@ -1190,11 +1188,9 @@
                         <Component class="javax.swing.JComboBox" name="boxTipoSimulacionODL">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="4">
-                                <StringItem index="0" value="Item 1"/>
-                                <StringItem index="1" value="Item 2"/>
-                                <StringItem index="2" value="Item 3"/>
-                                <StringItem index="3" value="Item 4"/>
+                              <StringArray count="2">
+                                <StringItem index="0" value="Simulaci&#xf3;n Est&#xe1;tica"/>
+                                <StringItem index="1" value="Simulaci&#xf3;n Din&#xe1;mica"/>
                               </StringArray>
                             </Property>
                           </Properties>
@@ -1330,11 +1326,9 @@
                         <Component class="javax.swing.JComboBox" name="boxTipoSimulacionPRI">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="4">
-                                <StringItem index="0" value="Item 1"/>
-                                <StringItem index="1" value="Item 2"/>
-                                <StringItem index="2" value="Item 3"/>
-                                <StringItem index="3" value="Item 4"/>
+                              <StringArray count="2">
+                                <StringItem index="0" value="Simulaci&#xf3;n Est&#xe1;tica"/>
+                                <StringItem index="1" value="Simulaci&#xf3;n Din&#xe1;mica"/>
                               </StringArray>
                             </Property>
                           </Properties>
@@ -1358,13 +1352,16 @@
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane14" min="-2" pref="319" max="-2" attributes="0"/>
-                                  <EmptySpace pref="123" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
-                                  <Component id="boxTipoSimulacionRR" min="-2" pref="188" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane14" min="-2" pref="319" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
+                                          <Component id="boxTipoSimulacionRR" min="-2" pref="188" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -1400,11 +1397,9 @@
                         <Component class="javax.swing.JComboBox" name="boxTipoSimulacionRR">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="4">
-                                <StringItem index="0" value="Item 1"/>
-                                <StringItem index="1" value="Item 2"/>
-                                <StringItem index="2" value="Item 3"/>
-                                <StringItem index="3" value="Item 4"/>
+                              <StringArray count="2">
+                                <StringItem index="0" value="Simulaci&#xf3;n Est&#xe1;tica"/>
+                                <StringItem index="1" value="Simulaci&#xf3;n Din&#xe1;mica"/>
                               </StringArray>
                             </Property>
                           </Properties>
