@@ -356,47 +356,50 @@ public class ControllerGeneral implements ActionListener {
         listarRecursosMaquina();
     }
 
-    public void iniciarTimer(int tipoAlgoritmo) {
+    public void iniciarTimer(final int tipoAlgoritmo) {
 
-        // Si ya está corriendo, no hacer nada
+        // Si ya está corriendo, no hagas nada
         if (ejecutando) {
             JOptionPane.showMessageDialog(guiAdmin, "La simulación ya está en curso.");
             return;
         }
 
-        ejecutando = true; // ahora está en ejecución
-
-        // SOLO si es la primera vez que se inicia
-        if (timer == null) {
-            tiempoSimulacion = 0;
-            ordenarTipoAlgoritmo(tipoAlgoritmo);
-
-            timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                    boolean terminado;
-                    ordenarTipoAlgoritmo(tipoAlgoritmo);
-
-                    if (tipoAlgoritmo == 3) {
-                        terminado = administradorP.ejecutarPasoRR();
-                    } else {
-                        terminado = administradorP.ejecutarPaso();
-                    }
-
-                    listarTipoDeAlgoritmo(tipoAlgoritmo);
-                    tiempoSimulacion++;
-
-                    if (terminado) {
-                        timer.stop();
-                        ejecutando = false;
-                        JOptionPane.showMessageDialog(guiAdmin, "La simulación ha finalizado.");
-                    }
-                }
-            });
+        // Si había un timer anterior, lo detenemos y lo reemplazamos
+        if (timer != null) {
+            timer.stop();
         }
 
-        // Aquí se reanuda sin reiniciar nada
+        ejecutando = true;
+        tiempoSimulacion = 0;
+
+        // 🔹 Nuevo Timer, ligado al tipo de algoritmo actual
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                boolean terminado;
+
+                // RR usa su propio método
+                if (tipoAlgoritmo == 3) {
+                    terminado = administradorP.ejecutarPasoRR();
+                } else {
+                    terminado = administradorP.ejecutarPaso();
+                }
+
+                // Actualizar las áreas de texto de la GUI
+                listarTipoDeAlgoritmo(tipoAlgoritmo);
+
+                tiempoSimulacion++;
+
+                if (terminado) {
+                    timer.stop();
+                    ejecutando = false;
+                    JOptionPane.showMessageDialog(guiAdmin, "La simulación ha finalizado.");
+                }
+            }
+        });
+
+        // Ahora sí, arrancamos
         timer.start();
     }
 
@@ -487,13 +490,17 @@ public class ControllerGeneral implements ActionListener {
         boolean dinamico = false;
 
         if (tipoAlgoritmo == 0) {
-            dinamico = guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString().equals("Simulación Dinámica");
+            dinamico = guiAdmin.getBoxTipoSimulacionODL()
+                    .getSelectedItem().toString().equals("Simulación Dinámica");
         } else if (tipoAlgoritmo == 1) {
-            dinamico = guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString().equals("Simulación Dinámica");
+            dinamico = guiAdmin.getBoxTipoSimulacionTMC()
+                    .getSelectedItem().toString().equals("Simulación Dinámica");
         } else if (tipoAlgoritmo == 2) {
-            dinamico = guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString().equals("Simulación Dinámica");
+            dinamico = guiAdmin.getBoxTipoSimulacionPRI()
+                    .getSelectedItem().toString().equals("Simulación Dinámica");
         } else if (tipoAlgoritmo == 3) {
-            dinamico = guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString().equals("Simulación Dinámica");
+            dinamico = guiAdmin.getBoxTipoSimulacionRR()
+                    .getSelectedItem().toString().equals("Simulación Dinámica");
         }
 
         // ============================
@@ -507,7 +514,13 @@ public class ControllerGeneral implements ActionListener {
             administradorP.desactivarModoEstatico();
         }
 
+        // 🔹 IMPORTANTE: ordenar UNA VEZ antes de iniciar el timer
+        ordenarTipoAlgoritmo(tipoAlgoritmo);
+
+        // Cambiar panel de la GUI
         cambioDePanel(tipoAlgoritmo);
+
+        // Iniciar el timer para ese algoritmo
         iniciarTimer(tipoAlgoritmo);
     }
 

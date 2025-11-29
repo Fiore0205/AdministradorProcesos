@@ -412,7 +412,7 @@ public class AdministradorProcesos {
         if (todasMaquinasDisponibles()) {
 
             ArrayList<Proceso> todos = modoEstatico ? listaEstaticaProcesos : listaProcesos.getLista();
-            
+
             for (Proceso p : todos) {
 
                 if (p.getEstado() == 4 || p.getEstado() == 1) {
@@ -424,6 +424,12 @@ public class AdministradorProcesos {
                     p.setEstado(3); // BLOQUEADO
                 }
             }
+        }
+        // SINCRONIZAR LA LISTA "VISIBLE" CON LA ESTÁTICA
+        if (modoEstatico && listaEstaticaProcesos != null) {
+            ArrayList<Proceso> listaReal = listaProcesos.getLista();
+            listaReal.clear();
+            listaReal.addAll(listaEstaticaProcesos);
         }
 
         return false; // Aún no termina
