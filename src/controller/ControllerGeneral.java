@@ -31,6 +31,7 @@ public class ControllerGeneral implements ActionListener {
     private int algoritmoPlActual;
     private boolean esDinamico;
     private int tamanioLista;
+    private boolean esEstatico;
 
     public ControllerGeneral() {
         administradorP = new AdministradorProcesos();
@@ -130,7 +131,6 @@ public class ControllerGeneral implements ActionListener {
         // ---------- ORDEN DE LLEGADA ----------
         if (e.getSource() == guiAdmin.getBtnODL()) {
             algoritmoPlActual = 0;
-            esDinamico = guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString().equals("Simulación Dinámica");
             cambioDePanel(0);
         }
 
@@ -155,7 +155,7 @@ public class ControllerGeneral implements ActionListener {
 
         // ---------- BOTON INICIAR ----------
         if (e.getSource() == guiAdmin.getBtnIniciar()) {
-            inicializarAlgoritmoEstatico(algoritmoPlActual);
+            inicializarSimulacionYAlgoritmo(algoritmoPlActual);
         }
 
         // ---------- BOTON PARAR ----------
@@ -482,20 +482,33 @@ public class ControllerGeneral implements ActionListener {
         }
     }
 
-    public void inicializarAlgoritmoEstatico(int tipoAlgoritmo) {
-        if (tipoAlgoritmo == 0 && guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString().equals("Simulación Dinámica")) {
-            cambioDePanel(tipoAlgoritmo);
-            iniciarTimer(tipoAlgoritmo);
-        } else if (tipoAlgoritmo == 1 && guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString().equals("Simulación Dinámica")) {
-            cambioDePanel(tipoAlgoritmo);
-            iniciarTimer(tipoAlgoritmo);
-        } else if (tipoAlgoritmo == 2 && guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString().equals("Simulación Dinámica")) {
-            cambioDePanel(tipoAlgoritmo);
-            iniciarTimer(tipoAlgoritmo);
-        } else if (tipoAlgoritmo == 3 && guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString().equals("Simulación Dinámica")) {
-            cambioDePanel(tipoAlgoritmo);
-            iniciarTimer(tipoAlgoritmo);
+    public void inicializarSimulacionYAlgoritmo(int tipoAlgoritmo) {
+
+        boolean dinamico = false;
+
+        if (tipoAlgoritmo == 0) {
+            dinamico = guiAdmin.getBoxTipoSimulacionODL().getSelectedItem().toString().equals("Simulación Dinámica");
+        } else if (tipoAlgoritmo == 1) {
+            dinamico = guiAdmin.getBoxTipoSimulacionTMC().getSelectedItem().toString().equals("Simulación Dinámica");
+        } else if (tipoAlgoritmo == 2) {
+            dinamico = guiAdmin.getBoxTipoSimulacionPRI().getSelectedItem().toString().equals("Simulación Dinámica");
+        } else if (tipoAlgoritmo == 3) {
+            dinamico = guiAdmin.getBoxTipoSimulacionRR().getSelectedItem().toString().equals("Simulación Dinámica");
         }
+
+        // ============================
+        // MODO ESTÁTICO O DINÁMICO
+        // ============================
+        if (!dinamico) {
+            // MODO ESTÁTICO
+            administradorP.prepararModoEstatico();
+        } else {
+            // MODO DINÁMICO
+            administradorP.desactivarModoEstatico();
+        }
+
+        cambioDePanel(tipoAlgoritmo);
+        iniciarTimer(tipoAlgoritmo);
     }
 
 }

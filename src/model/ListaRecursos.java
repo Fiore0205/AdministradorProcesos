@@ -17,6 +17,7 @@ public class ListaRecursos {
     private boolean bandera_recursos;
     private int nRecursoAUsar;
 
+
     // constructores
     public ListaRecursos() {
         nRecursos = 3;
@@ -187,6 +188,14 @@ public class ListaRecursos {
         }
 
         return null; // No encontrado
+    }
+
+    public ListaRecursos clonar() {
+        ListaRecursos copia = new ListaRecursos();
+        for (Recurso r : this.listaRecursos) {
+            copia.agregarRecurso(r.clonar());
+        }
+        return copia;
     }
 
 }

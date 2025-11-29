@@ -138,4 +138,9 @@ public class Recurso {
                 uUtilizadas);
     }
 
+    public Recurso clonar() {
+        Recurso copia = new Recurso(this.nRecurso, this.nomRecurso, this.unidades);
+        return copia;
+    }
+
 }

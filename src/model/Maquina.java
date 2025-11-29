@@ -250,4 +250,34 @@ public class Maquina {
         return sb.toString();
     }
 
+    public Maquina clonar() {
+
+        // 1. Crear una nueva máquina usando tu constructor principal
+        Maquina copia = new Maquina(
+                this.nMaquina,
+                this.nombre,
+                this.tiempoInicio,
+                this.unidadesMemoriaMaquina,
+                this.unidadesCPUMaquina
+        );
+
+        // 2. Copiar valores que el constructor no incluye
+        copia.unidadesMemoriaDisponible = this.unidadesMemoriaDisponible;
+        copia.unidadesMemoriaUtilizada = this.unidadesMemoriaUtilizada;
+        copia.cantidadNucleos = this.cantidadNucleos;
+        copia.ubicacion = this.ubicacion;
+
+        // 3. Clonar lista de recursos de la máquina
+        if (this.listaRecursoMaquina != null) {
+            copia.listaRecursoMaquina = this.listaRecursoMaquina.clonar();
+        }
+
+        // 4. Clonar representación de memoria (copiar lista de Strings)
+        if (this.memoriaMapa != null) {
+            copia.memoriaMapa = new ArrayList<>(this.memoriaMapa);
+        }
+
+        return copia;
+    }
+
 }

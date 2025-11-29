@@ -19,10 +19,15 @@ public class AdministradorProcesos {
     private int tiempoActual;
     private int quantum;
     private int indiceRR;  // índice actual de la cola
+    private ArrayList<Proceso> listaEstaticaProcesos;
+    private ArrayList<Maquina> listaEstaticaMaquinas;
+    private boolean modoEstatico = false;
 
     public AdministradorProcesos() {
         listaProcesos = new ListaProcesos();
         listaMaquinas = new ListaMaquinas();
+        listaEstaticaProcesos = new ArrayList<>();
+        listaEstaticaMaquinas = new ArrayList<>();
         tiempoActual = 0;
     }
 
@@ -304,14 +309,44 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
+//      MODO ESTÁTICO: CLONAR LISTAS AL INICIAR LA SIMULACIÓN
+// ============================================================
+    public void prepararModoEstatico() {
+        modoEstatico = true;
+
+        // Clonar procesos
+        listaEstaticaProcesos = new ArrayList<>();
+        for (Proceso p : listaProcesos.getLista()) {
+            listaEstaticaProcesos.add(p.clonar());
+        }
+
+        // Clonar máquinas
+        listaEstaticaMaquinas = new ArrayList<>();
+        for (Maquina m : listaMaquinas.getLista()) {
+            listaEstaticaMaquinas.add(m.clonar());
+        }
+    }
+
+// ============================================================
+//   DESACTIVAR MODO ESTÁTICO AL DETENER LA SIMULACIÓN
+// ============================================================
+    public void desactivarModoEstatico() {
+        modoEstatico = false;
+        listaEstaticaProcesos = null;
+        listaEstaticaMaquinas = null;
+    }
+
+    // ============================================================
 //       MÉTODO PRINCIPAL DE EJECUCIÓN DE PROCESOS (FIFO)
 // ============================================================
     public boolean ejecutarPaso() {
 
         boolean todosTerminados = true;
 
+        ArrayList<Proceso> lista = modoEstatico ? listaEstaticaProcesos : listaProcesos.getLista();
+
         // ===== PASO 1: revisar procesos en tiempo actual =====
-        for (Proceso p : listaProcesos.getLista()) {
+        for (Proceso p : lista) {
 
             // Si está TERMINADO → ignorar
             if (p.getEstado() == 4) {
@@ -376,7 +411,9 @@ public class AdministradorProcesos {
         // ===== PASO 2: verificar bloqueados reales =====
         if (todasMaquinasDisponibles()) {
 
-            for (Proceso p : listaProcesos.getLista()) {
+            ArrayList<Proceso> todos = modoEstatico ? listaEstaticaProcesos : listaProcesos.getLista();
+            
+            for (Proceso p : todos) {
 
                 if (p.getEstado() == 4 || p.getEstado() == 1) {
                     continue;
@@ -522,5 +559,4 @@ public class AdministradorProcesos {
             listaProcesos.getLista().add(p); // RR usa la lista general
         }
     }
-
 }

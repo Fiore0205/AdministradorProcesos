@@ -164,7 +164,7 @@ public class Proceso {
     public void setUnidadesTiempoRestante(int unidadesTiempoRestante) {
         this.unidadesTiempoRestante = unidadesTiempoRestante;
     }
-    
+
     public String detalleProceso() {
         String sal = "";
         sal += nombre + ": ";
@@ -248,6 +248,20 @@ public class Proceso {
         if (this.unidadesTiempoRestante > 0) {
             this.unidadesTiempoRestante--;
         }
+    }
+
+    public Proceso clonar() {
+        Proceso copia = new Proceso(this);
+
+        // Copiar valores dinámicos
+        copia.unidadesTiempoRestante = this.unidadesTiempoRestante;
+        copia.estado = this.estado;
+        copia.maquinaAsignada = null; // En estático la máquina NO se arrastra
+
+        // Copiar recursos en profundidad
+        copia.listaRecursosProcesos = this.listaRecursosProcesos.clonar();
+
+        return copia;
     }
 
 }
