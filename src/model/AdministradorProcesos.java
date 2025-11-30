@@ -58,11 +58,11 @@ public class AdministradorProcesos {
     // ============================================================
     // OBTENER LISTAS ACTIVAS SEGÚN MODO (DINÁMICO vs ESTÁTICO)
     // ============================================================
-    private ArrayList<Proceso> getListaProcesosActiva() {
+    public ArrayList<Proceso> getListaProcesosActiva() {
         return modoEstatico ? listaEstaticaProcesos : listaProcesos.getLista();
     }
 
-    private ArrayList<Maquina> getListaMaquinasActiva() {
+    public ArrayList<Maquina> getListaMaquinasActiva() {
         return modoEstatico ? listaEstaticaMaquinas : listaMaquinas.getLista();
     }
 
@@ -165,14 +165,24 @@ public class AdministradorProcesos {
     }
 
     public String listarRecursosTodasLasMaquinas() {
-        // Para la simulación, más adelante podrías duplicar lógica si quieres que
-        // esto también use las máquinas estáticas, pero por ahora se mantiene.
-        return listaMaquinas.listarRecursosDeTodasLasMaquinas();
+        ArrayList<Maquina> lista = getListaMaquinasActiva();
+        String salida = "Lista Recursos T" + tiempoActual + "\n";
+
+        for (Maquina m : lista) {
+            salida += m.listarRecursosTabla() + "\n";
+        }
+        return salida;
     }
 
     public String listarMapaMemoria() {
-        // Igual que arriba: ahora mismo se apoya en ListaMaquinas.
-        return listaMaquinas.mostrarMapaMemoriaTodas();
+        ArrayList<Maquina> lista = getListaMaquinasActiva();
+        String salida = "Mapa Memoria T" + tiempoActual + "\n";
+        salida += "       " + generarEncabezadoMemoria() + "\n";
+
+        for (Maquina m : lista) {
+            salida += m.mostrarMapaMemoria() + "\n\n";
+        }
+        return salida;
     }
 
     // ============================================================
@@ -190,12 +200,15 @@ public class AdministradorProcesos {
     //    TABLA PARA LOS ALGORITMOS DE PLANIFICACION 
     // ============================================================
     public String listarTablaDeEstados() {
-        // IMPORTANTE: esta tabla usa ListaProcesos.listarProcesosTabla()
-        // que está basada en la lista original.
-        // Si quieres que en modo estático la tabla se base en la lista clonada,
-        // habría que adaptar también ListaProcesos.
         String salida = "Lista Procesos T" + tiempoActual + "\n";
-        return salida += listaProcesos.listarProcesosTabla();
+
+        ArrayList<Proceso> lista = getListaProcesosActiva();
+
+        for (Proceso p : lista) {
+            salida += p.procesoTabla() + "\n";
+        }
+
+        return salida;
     }
 
     // ============================================================
@@ -600,6 +613,62 @@ public class AdministradorProcesos {
 
     public void reiniciarTiempo() {
         tiempoActual = 0;
+    }
+
+    private String generarEncabezadoMemoria() {
+        ArrayList<Maquina> lista = getListaMaquinasActiva();
+
+        int max = 0;
+        for (Maquina m : lista) {
+            if (m.getUnidadesMemoriaMaquina() > max) {
+                max = m.getUnidadesMemoriaMaquina();
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        // Generar números 1..max
+        for (int i = 1; i <= max; i++) {
+            sb.append(i).append(" ");
+        }
+
+        return sb.toString().trim();
+    }
+
+    public boolean asignarMemoriaAProceso(Proceso p, Maquina m, int tipoAlgoritmo) {
+        ListaParticiones lp = m.getListaParticiones();
+
+        boolean ok = false;
+
+        switch (tipoAlgoritmo) {
+            case 0: // DINÁMICO
+                ok = lp.asignarParticionDinamica(p);
+                break;
+            case 1: // PRIMER AJUSTE
+                ok = lp.asignarPrimerAjuste(p);
+                break;
+            case 2: // MEJOR AJUSTE
+                ok = lp.asignarMejorAjuste(p);
+                break;
+            case 3: // PEOR AJUSTE
+                ok = lp.asignarPeorAjuste(p);
+                break;
+        }
+
+        return ok;
+    }
+
+    public void liberarMemoriaProceso(Proceso p) {
+        Maquina m = p.getMaquinaAsignada();
+        if (m == null) {
+            return;
+        }
+
+        ListaParticiones lp = m.getListaParticiones();
+
+        lp.liberarParticion(p.getNombre());
+        lp.fusionarLibres();
+        // lp.compactar(); // opcional
     }
 
 }

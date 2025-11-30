@@ -16,6 +16,7 @@ public class Maquina {
     private int tiempoInicio;
     private ArrayList<String> memoriaMapa;  // Representación visual
     boolean clonando = false;
+    private ListaParticiones listaParticiones;
 
     // --- CONSTRUCTOR PRINCIPAL ---
     public Maquina(int nMaquina, String nombre,
@@ -33,6 +34,7 @@ public class Maquina {
         cantidadNucleos = (int) (Math.random() * 4) + 1;
 
         listaRecursoMaquina = new ListaRecursos(15);
+        listaParticiones = new ListaParticiones();  // dinámico
 
         if (!clonando) {
             listarMemoriaLibres();
@@ -111,6 +113,14 @@ public class Maquina {
 
     public ArrayList<String> getMemoriaMapa() {
         return memoriaMapa;
+    }
+
+    public ListaParticiones getListaParticiones() {
+        return listaParticiones;
+    }
+
+    public void setListaParticiones(ListaParticiones listaParticiones) {
+        this.listaParticiones = listaParticiones;
     }
 
     // --- MÉTODOS MEMORIA ---
@@ -279,6 +289,17 @@ public class Maquina {
     // 🔹 CONSTRUCTOR PRIVADO PARA CLONACIÓN
     private Maquina(boolean clonando) {
         this.clonando = clonando;
+    }
+
+    public void resetListaParticiones() {
+        listaParticiones = new ListaParticiones(); // vacío
+
+        // Crear una partición libre de todo el tamaño de la memoria
+        Particion p = new Particion(0, unidadesMemoriaMaquina - 1, unidadesMemoriaMaquina);
+        p.setEstadoP('L');
+        p.setNombreProceso("L");
+
+        listaParticiones.agregarParticiones(p);
     }
 
 }
