@@ -1,18 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import model.AdministradorProcesos;
 import model.Maquina;
 import model.Proceso;
 import model.ListaParticiones;
+import model.Particion;
 
-/**
- *
- * @author fioli
- */
 public class PruebaBorrador {
 
     public static void main(String[] args) {
@@ -23,9 +16,39 @@ public class PruebaBorrador {
         Maquina m = new Maquina(1, "M1", 0, 256, 1);
         admin.getListaMaquinasActiva().add(m);
 
+        // ================================================================
+        //  PRUEBA 0: PARTICIONES TAMAÑO FIJO
+        // ================================================================
+        System.out.println("\n=========================================");
+        System.out.println("     PRUEBA: PARTICIONES TAMAÑO FIJO");
         System.out.println("=========================================");
+
+        ListaParticiones fijo = new ListaParticiones(256, 32);
+        System.out.println(fijo.listarParticiones());
+
+
+        // ================================================================
+        //  PRUEBA 1: PARTICIONES TAMAÑO VARIABLE
+        // ================================================================
+        System.out.println("\n=========================================");
+        System.out.println("     PRUEBA: PARTICIONES TAMAÑO VARIABLE");
+        System.out.println("=========================================");
+
+        // Cantidades: {#16, #32, #64, #128, #256, #512}
+        int cantidades[] = {2, 1, 1, 0, 0, 0};
+        ListaParticiones variable = new ListaParticiones(256, cantidades);
+        System.out.println(variable.listarParticiones());
+
+
+        // ================================================================
+        //      PRUEBA 2: ASIGNACIÓN DINÁMICA
+        // ================================================================
+        System.out.println("\n=========================================");
         System.out.println("     PRUEBA: ASIGNACIÓN DINÁMICA");
         System.out.println("=========================================");
+
+        m.setListaParticiones(new ListaParticiones());
+        m.getListaParticiones().agregarParticiones(new Particion(0, 255, 256)); // memoria libre inicial
 
         Proceso d1 = new Proceso(1, "D1", 1, 0, 5, 40, 0);
         Proceso d2 = new Proceso(2, "D2", 1, 0, 5, 20, 0);
@@ -49,15 +72,16 @@ public class PruebaBorrador {
         m.getListaParticiones().compactar();
         System.out.println(m.getListaParticiones().listarParticiones());
 
-        // DESPUÉS DE LA PRIMERA PARTE, REINICIAMOS LA MEMORIA
-        m.resetListaParticiones();
 
+        // ================================================================
+        //      PRIMER AJUSTE
+        // ================================================================
         System.out.println("\n=========================================");
         System.out.println("     PRUEBA: PRIMER AJUSTE");
         System.out.println("=========================================");
 
-        // Reiniciar particiones en máquina
         m.setListaParticiones(new ListaParticiones());
+        m.getListaParticiones().agregarParticiones(new Particion(0, 255, 256));
 
         Proceso p1 = new Proceso(4, "P1", 1, 0, 5, 30, 0);
         Proceso p2 = new Proceso(5, "P2", 1, 0, 5, 40, 0);
@@ -69,11 +93,15 @@ public class PruebaBorrador {
 
         System.out.println(m.getListaParticiones().listarParticiones());
 
+        // ================================================================
+        //      MEJOR AJUSTE
+        // ================================================================
         System.out.println("\n=========================================");
         System.out.println("     PRUEBA: MEJOR AJUSTE");
         System.out.println("=========================================");
 
         m.setListaParticiones(new ListaParticiones());
+        m.getListaParticiones().agregarParticiones(new Particion(0, 255, 256));
 
         Proceso b1 = new Proceso(7, "B1", 1, 0, 5, 35, 0);
         Proceso b2 = new Proceso(8, "B2", 1, 0, 5, 15, 0);
@@ -85,11 +113,15 @@ public class PruebaBorrador {
 
         System.out.println(m.getListaParticiones().listarParticiones());
 
+        // ================================================================
+        //      PEOR AJUSTE
+        // ================================================================
         System.out.println("\n=========================================");
         System.out.println("     PRUEBA: PEOR AJUSTE");
         System.out.println("=========================================");
 
         m.setListaParticiones(new ListaParticiones());
+        m.getListaParticiones().agregarParticiones(new Particion(0, 255, 256));
 
         Proceso w1 = new Proceso(10, "W1", 1, 0, 5, 25, 0);
         Proceso w2 = new Proceso(11, "W2", 1, 0, 5, 50, 0);
