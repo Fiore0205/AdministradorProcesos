@@ -253,13 +253,13 @@ public class Proceso {
     public Proceso clonar() {
         Proceso copia = new Proceso(this);
 
-        // Copiar valores dinámicos
         copia.unidadesTiempoRestante = this.unidadesTiempoRestante;
         copia.estado = this.estado;
-        copia.maquinaAsignada = null; // En estático la máquina NO se arrastra
 
-        // Copiar recursos en profundidad
+        // clonar recursos según ListaRecursos(15)
         copia.listaRecursosProcesos = this.listaRecursosProcesos.clonar();
+
+        copia.maquinaAsignada = null;
 
         return copia;
     }

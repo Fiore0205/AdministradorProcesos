@@ -19,6 +19,8 @@ public class AdministradorProcesos {
     private int tiempoActual;
     private int quantum;
     private int indiceRR;  // índice actual de la cola
+
+    // Listas para modo estático
     private ArrayList<Proceso> listaEstaticaProcesos;
     private ArrayList<Maquina> listaEstaticaMaquinas;
     private boolean modoEstatico = false;
@@ -53,6 +55,17 @@ public class AdministradorProcesos {
         this.indiceRR = 0;  // reset cola circular
     }
 
+    // ============================================================
+    // OBTENER LISTAS ACTIVAS SEGÚN MODO (DINÁMICO vs ESTÁTICO)
+    // ============================================================
+    private ArrayList<Proceso> getListaProcesosActiva() {
+        return modoEstatico ? listaEstaticaProcesos : listaProcesos.getLista();
+    }
+
+    private ArrayList<Maquina> getListaMaquinasActiva() {
+        return modoEstatico ? listaEstaticaMaquinas : listaMaquinas.getLista();
+    }
+
     //------- METODOS DE PROCESOS BOTONES --------------------
     public void crearProceso(int nProceso, String nombre, int prioridad, int tipo, int unidadesTiempo, int unidadesMem,
             int unidadesCpu) {
@@ -82,6 +95,8 @@ public class AdministradorProcesos {
 
     //------- METODOS DE PROCESOS LISTAS --------------------
     public String listarProcesosDetalle() { //para cuadro de procesos
+        // OJO: esto sigue usando la lista original de ListaProcesos
+        // porque es para la sección de "configuración", no para la simulación.
         return listaProcesos.listarProcesosDetalle();
     }
 
@@ -132,6 +147,8 @@ public class AdministradorProcesos {
 
     // ----METODOS MAQUINAS LISTAR ----
     public String listarMaquinasDetalle() {
+        // Igual que en procesos, esto es más para la parte de configuración,
+        // por eso se usa la lista original.
         return listaMaquinas.listarMaquinasDetalle();
     }
 
@@ -148,16 +165,19 @@ public class AdministradorProcesos {
     }
 
     public String listarRecursosTodasLasMaquinas() {
+        // Para la simulación, más adelante podrías duplicar lógica si quieres que
+        // esto también use las máquinas estáticas, pero por ahora se mantiene.
         return listaMaquinas.listarRecursosDeTodasLasMaquinas();
     }
 
     public String listarMapaMemoria() {
+        // Igual que arriba: ahora mismo se apoya en ListaMaquinas.
         return listaMaquinas.mostrarMapaMemoriaTodas();
     }
 
     // ============================================================
-//    Ordenar
-// ============================================================
+    //    Ordenar
+    // ============================================================
     public void ordenarPrioridad() {
         listaProcesos.ordenarPrioridad();
     }
@@ -167,18 +187,22 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
-//    TABLA PARA LOS ALGORITMOS DE PLANIFICACION 
-// ============================================================
+    //    TABLA PARA LOS ALGORITMOS DE PLANIFICACION 
+    // ============================================================
     public String listarTablaDeEstados() {
+        // IMPORTANTE: esta tabla usa ListaProcesos.listarProcesosTabla()
+        // que está basada en la lista original.
+        // Si quieres que en modo estático la tabla se base en la lista clonada,
+        // habría que adaptar también ListaProcesos.
         String salida = "Lista Procesos T" + tiempoActual + "\n";
         return salida += listaProcesos.listarProcesosTabla();
     }
 
     // ============================================================
-//    MÉTODO PARA BUSCAR LA PRIMERA MÁQUINA DISPONIBLE POR TIEMPO
-// ============================================================
+    //    MÉTODO PARA BUSCAR LA PRIMERA MÁQUINA DISPONIBLE POR TIEMPO
+    // ============================================================
     public Maquina buscarMaquinaValida(Proceso p) {
-        ArrayList<Maquina> lista = listaMaquinas.getLista();
+        ArrayList<Maquina> lista = getListaMaquinasActiva();
 
         for (Maquina m : lista) {
             if (m.getTiempoInicio() <= tiempoActual) {
@@ -205,8 +229,8 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
-//     VALIDAR MEMORIA SOLO CONTRA LA MÁQUINA DISPONIBLE
-// ============================================================
+    //     VALIDAR MEMORIA SOLO CONTRA LA MÁQUINA DISPONIBLE
+    // ============================================================
     public boolean validarMemoria(Proceso proceso) {
         Maquina m = buscarMaquinaValida(proceso);
         if (m == null) {
@@ -227,8 +251,8 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
-//    VALIDAR RECURSOS (NOMBRE + UNIDADES) EN LA MÁQUINA DISPONIBLE
-// ============================================================
+    //    VALIDAR RECURSOS (NOMBRE + UNIDADES) EN LA MÁQUINA DISPONIBLE
+    // ============================================================
     public boolean validarRecursos(Proceso proceso) {
 
         Maquina m = buscarMaquinaValida(proceso);
@@ -286,8 +310,8 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
-// CAMBIAR ESTADO DEL PROCESO
-// ============================================================
+    // CAMBIAR ESTADO DEL PROCESO
+    // ============================================================
     public void cambiarEstadoProceso(Proceso proceso, int estado) {
         if (proceso != null) {
             proceso.setEstado(estado);
@@ -295,8 +319,8 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
-//  DECREMENTAR TIEMPO RESTANTE DEL PROCESO ACTIVO
-// ============================================================
+    //  DECREMENTAR TIEMPO RESTANTE DEL PROCESO ACTIVO
+    // ============================================================
     public void tiempoProcesoRestante(Proceso proceso) {
         if (proceso == null) {
             return;
@@ -309,8 +333,8 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
-//      MODO ESTÁTICO: CLONAR LISTAS AL INICIAR LA SIMULACIÓN
-// ============================================================
+    //      MODO ESTÁTICO: CLONAR LISTAS AL INICIAR LA SIMULACIÓN
+    // ============================================================
     public void prepararModoEstatico() {
         modoEstatico = true;
 
@@ -327,9 +351,9 @@ public class AdministradorProcesos {
         }
     }
 
-// ============================================================
-//   DESACTIVAR MODO ESTÁTICO AL DETENER LA SIMULACIÓN
-// ============================================================
+    // ============================================================
+    //   DESACTIVAR MODO ESTÁTICO AL DETENER LA SIMULACIÓN
+    // ============================================================
     public void desactivarModoEstatico() {
         modoEstatico = false;
         listaEstaticaProcesos = null;
@@ -337,13 +361,13 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
-//       MÉTODO PRINCIPAL DE EJECUCIÓN DE PROCESOS (FIFO)
-// ============================================================
+    //       MÉTODO PRINCIPAL DE EJECUCIÓN DE PROCESOS (FIFO)
+    // ============================================================
     public boolean ejecutarPaso() {
 
         boolean todosTerminados = true;
 
-        ArrayList<Proceso> lista = modoEstatico ? listaEstaticaProcesos : listaProcesos.getLista();
+        ArrayList<Proceso> lista = getListaProcesosActiva();
 
         // ===== PASO 1: revisar procesos en tiempo actual =====
         for (Proceso p : lista) {
@@ -411,7 +435,8 @@ public class AdministradorProcesos {
         // ===== PASO 2: verificar bloqueados reales =====
         if (todasMaquinasDisponibles()) {
 
-            ArrayList<Proceso> todos = modoEstatico ? listaEstaticaProcesos : listaProcesos.getLista();
+            // AHORA también se usa la lista ACTIVA aquí
+            ArrayList<Proceso> todos = getListaProcesosActiva();
 
             for (Proceso p : todos) {
 
@@ -425,19 +450,14 @@ public class AdministradorProcesos {
                 }
             }
         }
-        // SINCRONIZAR LA LISTA "VISIBLE" CON LA ESTÁTICA
-        if (modoEstatico && listaEstaticaProcesos != null) {
-            ArrayList<Proceso> listaReal = listaProcesos.getLista();
-            listaReal.clear();
-            listaReal.addAll(listaEstaticaProcesos);
-        }
 
         return false; // Aún no termina
     }
 
     private boolean todasMaquinasDisponibles() {
-        ArrayList<Maquina> lista = listaMaquinas.getLista();
-        if (lista.isEmpty()) {
+        // 🔹 AHORA usa la lista activa de máquinas
+        ArrayList<Maquina> lista = getListaMaquinasActiva();
+        if (lista == null || lista.isEmpty()) {
             return false;
         }
 
@@ -452,11 +472,16 @@ public class AdministradorProcesos {
     }
 
     // ============================================================
-//  DETERMINAR SI DEBE PASAR A BLOQUEADO
-// ============================================================
+    //  DETERMINAR SI DEBE PASAR A BLOQUEADO
+    // ============================================================
     private boolean cambiarAEstadoBloqueado(Proceso p) {
 
-        ArrayList<Maquina> lista = listaMaquinas.getLista();
+        // 🔹 AHORA también usa la lista activa de máquinas
+        ArrayList<Maquina> lista = getListaMaquinasActiva();
+
+        if (lista == null || lista.isEmpty()) {
+            return true;
+        }
 
         // Aquí asumimos que ya todas las máquinas están disponibles
         // (lo controla todasMaquinasDisponibles())
@@ -507,7 +532,12 @@ public class AdministradorProcesos {
 
     public boolean ejecutarPasoRR() {
 
-        ArrayList<Proceso> lista = listaProcesos.getLista();
+        // 🔹 AHORA RR también se basa en la lista ACTIVA
+        ArrayList<Proceso> lista = getListaProcesosActiva();
+
+        if (lista == null || lista.isEmpty()) {
+            return true;
+        }
 
         // 1. Verificar si todos están terminados
         boolean todosTerminados = true;
@@ -560,9 +590,16 @@ public class AdministradorProcesos {
     }
 
     public void insertarProcesoRR(int id) {
+        // 🔹 Ahora insertamos sobre la lista ACTIVA de procesos
+        ArrayList<Proceso> lista = getListaProcesosActiva();
         Proceso p = listaProcesos.buscarProceso(id);
-        if (p != null) {
-            listaProcesos.getLista().add(p); // RR usa la lista general
+        if (p != null && lista != null) {
+            lista.add(p);
         }
     }
+
+    public void reiniciarTiempo() {
+        tiempoActual = 0;
+    }
+
 }

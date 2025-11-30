@@ -15,6 +15,7 @@ public class Maquina {
     private String ubicacion;
     private int tiempoInicio;
     private ArrayList<String> memoriaMapa;  // Representación visual
+    boolean clonando = false;
 
     // --- CONSTRUCTOR PRINCIPAL ---
     public Maquina(int nMaquina, String nombre,
@@ -32,7 +33,10 @@ public class Maquina {
         cantidadNucleos = (int) (Math.random() * 4) + 1;
 
         listaRecursoMaquina = new ListaRecursos(15);
-        listarMemoriaLibres();
+
+        if (!clonando) {
+            listarMemoriaLibres();
+        }
     }
 
     // --- GETTERS Y SETTERS ---
@@ -251,33 +255,30 @@ public class Maquina {
     }
 
     public Maquina clonar() {
+        Maquina copia = new Maquina(true);
 
-        // 1. Crear una nueva máquina usando tu constructor principal
-        Maquina copia = new Maquina(
-                this.nMaquina,
-                this.nombre,
-                this.tiempoInicio,
-                this.unidadesMemoriaMaquina,
-                this.unidadesCPUMaquina
-        );
+        copia.nMaquina = this.nMaquina;
+        copia.nombre = this.nombre;
+        copia.ubicacion = this.ubicacion;
+        copia.tiempoInicio = this.tiempoInicio;
 
-        // 2. Copiar valores que el constructor no incluye
+        copia.unidadesMemoriaMaquina = this.unidadesMemoriaMaquina;
         copia.unidadesMemoriaDisponible = this.unidadesMemoriaDisponible;
         copia.unidadesMemoriaUtilizada = this.unidadesMemoriaUtilizada;
+
+        copia.unidadesCPUMaquina = this.unidadesCPUMaquina;
         copia.cantidadNucleos = this.cantidadNucleos;
-        copia.ubicacion = this.ubicacion;
 
-        // 3. Clonar lista de recursos de la máquina
-        if (this.listaRecursoMaquina != null) {
-            copia.listaRecursoMaquina = this.listaRecursoMaquina.clonar();
-        }
+        copia.memoriaMapa = new ArrayList<>(this.memoriaMapa);
 
-        // 4. Clonar representación de memoria (copiar lista de Strings)
-        if (this.memoriaMapa != null) {
-            copia.memoriaMapa = new ArrayList<>(this.memoriaMapa);
-        }
+        copia.listaRecursoMaquina = this.listaRecursoMaquina.clonar();
 
         return copia;
+    }
+
+    // 🔹 CONSTRUCTOR PRIVADO PARA CLONACIÓN
+    private Maquina(boolean clonando) {
+        this.clonando = clonando;
     }
 
 }

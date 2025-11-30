@@ -385,7 +385,7 @@ public class ControllerGeneral implements ActionListener {
                 } else {
                     terminado = administradorP.ejecutarPaso();
                 }
-
+                
                 // Actualizar las áreas de texto de la GUI
                 listarTipoDeAlgoritmo(tipoAlgoritmo);
 
@@ -487,6 +487,7 @@ public class ControllerGeneral implements ActionListener {
 
     public void inicializarSimulacionYAlgoritmo(int tipoAlgoritmo) {
 
+        administradorP.reiniciarTiempo();
         boolean dinamico = false;
 
         if (tipoAlgoritmo == 0) {

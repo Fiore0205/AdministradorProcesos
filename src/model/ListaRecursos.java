@@ -191,7 +191,7 @@ public class ListaRecursos {
     }
 
     public ListaRecursos clonar() {
-        ListaRecursos copia = new ListaRecursos();
+        ListaRecursos copia = new ListaRecursos(this.nRecursos);
         for (Recurso r : this.listaRecursos) {
             copia.agregarRecurso(r.clonar());
         }
